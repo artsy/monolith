@@ -7,9 +7,10 @@ module.exports =
 
   log: (name, payload) ->
     console.log payload
-    @channels.status.trigger "client-#{name}",
-      client: @name
-      data: payload
+    if @channels
+      @channels.status.trigger "client-#{name}",
+        client: @name
+        data: payload
 
   setupMonitoring: ->
     @name = @__name__()
