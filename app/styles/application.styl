@@ -1,0 +1,110 @@
+@import 'common'
+
+// Base
+// ----
+*, *:before, *:after
+  box-sizing border-box
+
+::selection
+  background-color highlightColor
+  color white
+::-moz-selection
+  background-color highlightColor
+  color white
+
+body
+  garamond()
+  background-color backgroundColor
+  color fontColor
+  font-size 18px
+  font-smoothing antialiased
+  text-rendering optimizeLegibility
+
+a
+  cursor pointer
+
+img
+  max-width 100%
+  max-height 100%
+  vertical-align bottom
+
+h1, h2, h3, h4
+  font-weight normal
+  font-size 1
+  line-height 1
+  margin 0
+
+.is-lowercase
+  text-transform lowercase !important
+
+// Structure
+// ---------
+#debug
+  position fixed
+  top 0
+  right 0
+  background-color black
+  color white
+  font-family monospace
+  font-size 12px
+  text-transform uppercase
+  opacity 0
+  z-index 9
+  &:hover
+    opacity 1
+  a
+    display block
+    padding unit
+    color white
+    border 1px solid
+    margin-top -1px
+    font-smoothing subpixel-antialiased
+    text-align right
+    &:hover
+      color #ccc
+
+
+// Loader
+// ------
+@keyframes spin
+  0%
+    transform rotate(0deg)
+    animation-timing-function linear
+  100%
+    transform rotate(360deg)
+    animation-timing-function linear
+
+spinner(width=25px, height=6px, color=white)
+  background color
+  width width
+  height height
+  position absolute
+  top calc('50% - (%s / 2)' % height)
+  left calc('50% - (%s / 2)' % width)
+  animation spin 2s infinite
+
+#loading
+  position absolute
+  top 0
+  right 0
+  bottom 0
+  left 0
+  background-color highlightColor
+  z-index 9999
+  transition opacity 1s
+  &:after
+    content ''
+    spinner((unit * 3), (unit / 2))
+  &[data-state='fade-out']
+    opacity 0
+
+// Screensaver
+// -----------
+#home-logo
+  position absolute
+  transition all 10s ease-in-out
+
+// Hide cursor
+// -----------
+.has-cursor-hidden #screen
+  cursor none

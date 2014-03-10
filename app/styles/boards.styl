@@ -1,0 +1,196 @@
+@import 'common'
+
+// Header
+// ------
+boardHeaderHeight   = (screenHeight / 6) * 0.6
+boardFooterHeight   = (screenHeight / 6) * 0.4
+boardImageSize      = 200px
+
+.board-header
+  position absolute
+  top 0
+  left 0
+  width 100%
+  height boardHeaderHeight
+  margin 0
+  padding 0 (unit * 4)
+  border-bottom 1px solid borderColor
+
+#board-name
+  avant-garde()
+  display inline-block
+  margin 0
+  font-size 40px
+  font-weight normal
+  line-height boardHeaderHeight
+  vertical-align middle
+  transition opacity 0.5s
+  opacity 1
+  &[data-state='fade-out']
+    opacity 0
+  &[data-state='fade-in']
+    opacity 1
+
+// Pagination indicator
+// --------------------
+.board-pagination
+  position absolute
+  top 0
+  right 0
+  bottom 0
+  width boardHeaderHeight
+  text-align center
+  line-height boardHeaderHeight
+  vertical-align middle
+  height boardHeaderHeight
+  transform rotate(90deg)
+  backface-visibility hidden
+
+.pagination-dot
+  display inline-block
+  width (unit / 2)
+  height @width
+  margin 0 (@width / 4)
+  background-color white
+  border-radius (@width / 2)
+  opacity 0.25
+  transition opacity 1s
+
+// I spent too long trying to get iteration/interpolation working on this
+#leaderboard[data-page='1'] .pagination-dot:nth-child(1)
+  opacity 1
+#leaderboard[data-page='2'] .pagination-dot:nth-child(2)
+  opacity 1
+#leaderboard[data-page='3'] .pagination-dot:nth-child(3)
+  opacity 1
+
+// Body
+// ----
+itemHeight = (screenHeight / 6)
+
+item-styling()
+  height itemHeight
+  line-height itemHeight
+
+footer-styling()
+  content ''
+  position absolute
+  bottom -1px
+  left 0
+  width 100%
+  height boardFooterHeight
+  background-color black
+
+#boards
+  position absolute
+  top boardHeaderHeight
+  left 0
+  width 100%
+  height ((itemHeight * 6) - boardHeaderHeight)
+  overflow hidden
+  &:after
+    footer-styling()
+
+.boards-rail
+  transition transform 1s
+
+.board-placeholder-item
+  item-styling()
+  avant-garde()
+  font-size 40px
+  padding 0 (unit * 3)
+  border-bottom 1px solid borderColor
+
+.board
+  position relative
+  padding-bottom boardFooterHeight
+  prevent-content-shift()
+  &:after
+    footer-styling()
+
+.board-data
+.board-target
+  position absolute
+  top 0
+  left 0
+  width 100%
+  height 100%
+  overflow hidden
+
+.board-target
+  visibility hidden
+
+.board-value
+  display table
+  width 100%
+  height itemHeight
+.bv-cell
+  display table-cell
+  height 100%
+  vertical-align middle
+.bv-cell-thumb
+  width boardImageSize
+.bv-cell-name
+  padding 0 (unit * 2)
+
+.board-value
+  position relative
+  padding-left (unit * 6)
+  garamond()
+  font-size 60px
+  vertical-align middle
+  transition all 0.5s
+  &[data-state='fade-out']
+    opacity 0
+  &[data-state='fade-in']
+    opacity 1
+
+.bv-thumb
+  display inline-block
+  position relative
+  background-color borderColor
+  width boardImageSize
+  height @width
+  vertical-align middle
+.bv-outline
+  display inline-block
+  position absolute
+  top 0
+  right 0
+  bottom 0
+  left 0
+  // Some images get cropped wierd and have a
+  // 1px white border on the edges
+  // This constrains it in 1px
+  box-shadow inset 0 0 0 1px black
+  // Then adds a slight highlight
+  &:after
+    content ''
+    position absolute
+    top 1px
+    right 1px
+    bottom 1px
+    left 1px
+    border 1px solid rgba(255,255,255,.1)
+
+.bv-name
+  display inline-block
+  font-size 60px
+  overflow ellipsis
+  vertical-align bottom
+  max-width 600px
+
+.bv-score
+  display block
+  position absolute
+  top 0
+  right (unit * 3)
+  item-styling()
+  avant-garde()
+  font-size 40px
+  opacity 0
+  transition opacity 0.5s
+  &[data-state='fade-out']
+    opacity 0
+  &[data-state='fade-in']
+    opacity 1

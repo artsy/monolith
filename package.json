@@ -1,0 +1,40 @@
+{
+  "author": "Art.sy",
+  "name": "monolith",
+  "version": "0.0.1",
+  "homepage": "http://artsy.net",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "postinstall": "brunch build --production"
+  },
+  "dependencies": {
+    "coffee-script": "*",
+    "brunch": ">= 1.0 < 1.8",
+    "javascript-brunch": ">= 1.0 < 1.8",
+    "coffee-script-brunch": ">= 1.0 < 1.8",
+    "css-brunch": ">= 1.0 < 1.8",
+    "stylus-brunch": "1.8.0",
+    "eco-brunch": "1.7.1",
+    "uglify-js-brunch": ">= 1.0 < 1.8",
+    "clean-css-brunch": ">= 1.0 < 1.8",
+    "auto-reload-brunch": "1.4.0",
+    "express": "*",
+    "ect": "*",
+    "artsy-xapp-middleware": "*"
+  },
+  "devDependencies": {
+    "benv": "*",
+    "mocha": "*",
+    "should": "*",
+    "mocha": "*",
+    "sinon": "*",
+    "jquery": "2.1.0",
+    "underscore": "*",
+    "backbone": "*",
+    "eco": "*",
+    "rewire": "*"
+  }
+}
