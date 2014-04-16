@@ -26,7 +26,7 @@ module.exports =
 
     @channels.command.bind 'restart', (name) =>
       if (name is @name) or (name is 'all')
-        window.location.reload()
+        window.location.reload true
 
   authenticate: (options = {}) ->
     _sync = Backbone.sync
