@@ -3,34 +3,35 @@ application       = require '../application'
 HomeView          = require '../views/home'
 LeaderboardView   = require '../views/leaderboard'
 MapView           = require '../views/map'
+config            = require 'config/config'
 
 module.exports = class ApplicationRouter extends Router
   routes:
-    ''            : 'home'
-    'leaderboard' : 'leaderboard'
-    'map'         : 'map'
+    ''                : 'home'
+    ':id/leaderboard' : 'leaderboard'
+    ':id/map'         : 'map'
 
   initialize: ->
     $(window).on 'keyup', @toggleCursor
+
+  execute: ->
+    @view?.remove()
+    super
 
   toggleCursor: (e) ->
     return unless e.which is 72
     $('body').toggleClass 'has-cursor-hidden'
 
   home: ->
-    @__teardown__()
     @view = new HomeView
     $('body').html @view.render().$el
 
-  leaderboard: ->
-    @__teardown__()
+  leaderboard: (id) ->
+    config.FAIR_ID = id
     @view = new LeaderboardView
     $('body').html @view.render().$el
 
-  map: ->
-    @__teardown__()
+  map: (id) ->
+    config.FAIR_ID = id
     @view = new MapView
     $('body').html @view.render().$el
-
-  __teardown__: ->
-    @view?.remove()
