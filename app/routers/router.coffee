@@ -3,12 +3,13 @@ application       = require '../application'
 HomeView          = require '../views/home'
 LeaderboardView   = require '../views/leaderboard'
 MapView           = require '../views/map'
+config            = require 'config/config'
 
 module.exports = class ApplicationRouter extends Router
   routes:
-    ''            : 'home'
-    'leaderboard' : 'leaderboard'
-    'map'         : 'map'
+    ''                : 'home'
+    ':id/leaderboard' : 'leaderboard'
+    ':id/map'         : 'map'
 
   initialize: ->
     $(window).on 'keyup', @toggleCursor
@@ -25,10 +26,12 @@ module.exports = class ApplicationRouter extends Router
     @view = new HomeView
     $('body').html @view.render().$el
 
-  leaderboard: ->
+  leaderboard: (id) ->
+    config.FAIR_ID = id
     @view = new LeaderboardView
     $('body').html @view.render().$el
 
-  map: ->
+  map: (id) ->
+    config.FAIR_ID = id
     @view = new MapView
     $('body').html @view.render().$el
