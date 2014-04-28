@@ -17,6 +17,11 @@ describe 'MapUtils', ->
     benv.teardown()
     done()
 
+  describe '#hasMap', ->
+    it 'returns true or false based on the presence of a map transformation', ->
+      MapUtils.hasMap('the-armory-show-2014').should.be.true
+      MapUtils.hasMap('art-brussels-2014').should.be.false
+
   describe '#availableMaps', ->
     it 'knows what maps are available', ->
       MapUtils.availableMaps().should.be.an.instanceOf Array

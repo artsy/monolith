@@ -75,7 +75,10 @@ module.exports = class MapView extends View
 
   STEP: =>
     renderQueue = @queue.STEP()
-    @drawIndicators()
+
+    if @hasMap
+      @drawIndicators()
+
     # Delay such that markers come in after
     # and out slightly before content
     _.delay =>
@@ -133,10 +136,15 @@ module.exports = class MapView extends View
     @$map     = @$('#map-map')
     @$queue   = @$('#map-queue')
 
+  setupMapImage: ->
+    if @hasMap = MapUtils.hasMap config.FAIR_ID
+      @$map.css backgroundImage: "url(images/maps/#{config.FAIR_ID}.png)"
+      @checkForMarker()
+
   postRender: ->
     @cacheSelectors()
+    @setupMapImage()
     @bootstrap()
-    @checkForMarker()
 
   render: ->
     @$el.html @template(queue: @queue)

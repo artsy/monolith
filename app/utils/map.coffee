@@ -1,6 +1,9 @@
 Maps = require './maps'
 
 module.exports =
+  hasMap: (key) ->
+    _.contains @availableMaps(), key
+
   availableMaps: ->
     _.keys Maps
 

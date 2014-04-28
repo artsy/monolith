@@ -116,7 +116,9 @@ indicatorTransitionDuration   = 1s
   bottom 0
   width mapWidth
   height mapHeight
-  background transparent url('../images/map.png?v=2') bottom right no-repeat
+  background-color transparent
+  background-position bottom right
+  background-repeat no-repeat
   prevent-content-shift()
 
 // Dot
@@ -178,4 +180,4 @@ shadow3   = 0 0 3px (dotSize * 25) rgba(palePurple, 0.6)
   height 24px
   margin-left -(@width / 2)
   margin-top -((@height / 2) + 10)
-  background transparent url('../images/marker.png?v=2') center center no-repeat
+  background transparent url('../images/marker.png') center center no-repeat
