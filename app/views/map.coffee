@@ -1,3 +1,4 @@
+config    = require '../config/config'
 View      = require '../core/view'
 Feed      = require '../models/feed'
 Queue     = require '../collections/queue'
@@ -64,7 +65,7 @@ module.exports = class MapView extends View
   placeMapDot: (show) ->
     [x, y] = show.location()
     if x and y
-      [x, y]  = MapUtils.toMap x, y
+      [x, y]  = MapUtils.toMap x, y, config.FAIR_ID
       $marker = $('<div class="map-dot" data-state="inactive"></div>').
         attr('data-id', show.get('partner').id).
         css(left: "#{x}px", bottom: "#{y}px")
@@ -74,7 +75,10 @@ module.exports = class MapView extends View
 
   STEP: =>
     renderQueue = @queue.STEP()
-    @drawIndicators()
+
+    if @hasMap
+      @drawIndicators()
+
     # Delay such that markers come in after
     # and out slightly before content
     _.delay =>
@@ -132,10 +136,15 @@ module.exports = class MapView extends View
     @$map     = @$('#map-map')
     @$queue   = @$('#map-queue')
 
+  setupMapImage: ->
+    if @hasMap = MapUtils.hasMap config.FAIR_ID
+      @$map.css backgroundImage: "url(images/maps/#{config.FAIR_ID}.png)"
+      @checkForMarker()
+
   postRender: ->
     @cacheSelectors()
+    @setupMapImage()
     @bootstrap()
-    @checkForMarker()
 
   render: ->
     @$el.html @template(queue: @queue)

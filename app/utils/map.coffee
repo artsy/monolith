@@ -1,22 +1,28 @@
+Maps = require './maps'
+
 module.exports =
-  toMap: (x, y) ->
-    [x, y]  = @original x, y
-    [x, y]  = @rotate 0, 0, x, y, -74
-    [x, y]  = @scale x, y, 0.87, 0.86
-    [x, y]  = @translate x, y, -40, 730
-    [x, y]
+  hasMap: (key) ->
+    _.contains @availableMaps(), key
+
+  availableMaps: ->
+    _.keys Maps
+
+  toMap: (x, y, key) ->
+    Maps[key].call this, x, y
 
   # Get out map based on original input dimensions
+  # This is based on the map used to construct 'the-armory-show-2014'
+  # and may have to be changed
   original: (x, y) ->
     offset = -5
     [x, y] = [(x * 1022) + offset, (y * 1102) + offset]
 
   rotate: (cx, cy, x, y, angle) ->
     radians = (Math.PI / 180) * angle
-    cos   = Math.cos radians
-    sin   = Math.sin radians
-    nx  = (cos * (x - cx)) - (sin * (y - cy)) + cx
-    ny  = (sin * (x - cx)) + (cos * (y - cy)) + cy
+    cos = Math.cos radians
+    sin = Math.sin radians
+    nx = (cos * (x - cx)) - (sin * (y - cy)) + cx
+    ny = (sin * (x - cx)) + (cos * (y - cy)) + cy
     [nx, ny]
 
   translate: (x, y, tx, ty) ->
