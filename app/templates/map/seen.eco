@@ -1,0 +1,8 @@
+<div id='map-seen-border'></div>
+<div id='map-seen-shield'></div>
+
+<header id='map-seen-header'>
+  <h2 class='map-seen-name'>Past Favorites & Follows</h2>
+</header>
+
+<section id='map-seen'></section>

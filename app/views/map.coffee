@@ -3,8 +3,10 @@ View      = require '../core/view'
 Feed      = require '../models/feed'
 Queue     = require '../collections/queue'
 MapUtils  = require '../utils/map'
-template  = require '../templates/map'
 Loadable  = require '../utils/loadable'
+
+template      = require '../templates/map'
+seenTemplate  = require '../templates/map/seen'
 
 module.exports = class MapView extends View
   _.extend @prototype, Loadable
@@ -73,6 +75,11 @@ module.exports = class MapView extends View
         $marker.attr 'data-state', 'active'
       $marker
 
+  renderActions: ($el, actions) ->
+    $el.html(_.map actions, (action) ->
+      $(action.get 'fragment')
+    ).removeClass 'is-transitioning'
+
   STEP: =>
     renderQueue = @queue.STEP()
 
@@ -88,10 +95,15 @@ module.exports = class MapView extends View
         # Re-renders 3 elements, active, and the two onDeck
         # The transition puts the previous view into the state
         # that the stepped re-rendered view should be in
-        @$queue.html(_.map renderQueue, (action) ->
-          action.get 'fragment'
-        ).removeClass 'is-transitioning'
+        @renderActions @$queue, renderQueue
       , @transitionDuration
+
+      # If there is no map then render seen
+      unless @hasMap
+        @$seen.addClass 'is-transitioning'
+        _.delay =>
+          @renderActions @$seen, @queue.seen
+        , @transitionDuration
     , 500
 
   update: =>
@@ -116,7 +128,7 @@ module.exports = class MapView extends View
   # Called once on view initialization
   bootstrap: ->
     @feed.fetch
-      data: size: 40
+      data: size: 10
       success: (feed, response, xhr) =>
         @feedUpdatedAt = response.updated_at
         @queue.add response.items, parse: true
@@ -133,17 +145,22 @@ module.exports = class MapView extends View
       callback actions
 
   cacheSelectors: ->
+    @$screen  = @$('#screen')
     @$map     = @$('#map-map')
     @$queue   = @$('#map-queue')
 
-  setupMapImage: ->
+  setupMap: ->
     if @hasMap = MapUtils.hasMap config.FAIR_ID
       @$map.css backgroundImage: "url(images/maps/#{config.FAIR_ID}.png)"
       @checkForMarker()
+    else
+      @$map.remove()
+      @$screen.append seenTemplate()
+      @$seen = @$('#map-seen')
 
   postRender: ->
     @cacheSelectors()
-    @setupMapImage()
+    @setupMap()
     @bootstrap()
 
   render: ->
@@ -165,4 +182,4 @@ module.exports = class MapView extends View
     @STEP()
 
   rotate: ->
-    (@$screen ?= @$('#screen')).toggleClass 'is-rotated'
+    @$screen.toggleClass 'is-rotated'

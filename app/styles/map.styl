@@ -3,7 +3,7 @@
 mapWidth          = 1034px
 mapHeight         = 968px
 mapHeaderHeight   = 200px
-actionWidth       = 600px
+actionSize        = 600px
 
 queueTransitionDuration       = 1s
 indicatorTransitionDuration   = 1s
@@ -32,7 +32,7 @@ indicatorTransitionDuration   = 1s
   top screenHeaderHeight
   width 400px
   right 0
-  height actionWidth
+  height actionSize
   background linear-gradient(left, transparent, rgba(black, 0.75))
   z-index 2
 
@@ -55,7 +55,7 @@ indicatorTransitionDuration   = 1s
       opacity 1
   &.is-transitioning
     transition transform queueTransitionDuration ease-in-out
-    transform translateX(-(actionWidth + (unit * 8)))
+    transform translateX(-(actionSize + (unit * 8)))
     .action:nth-child(2)
       .action-metadata
       .action-type
@@ -64,15 +64,13 @@ indicatorTransitionDuration   = 1s
 // Action panels
 // -------------
 .action
-  width actionWidth
+  width actionSize
   display inline-block
   vertical-align top
   margin-right (unit * 8)
-
 .action-image
   position relative
-  height 600px
-
+  height actionSize
 .action-figure
   position absolute
   display inline-block
@@ -85,7 +83,6 @@ indicatorTransitionDuration   = 1s
   bottom 0
   left 0
   border 1px solid rgba(255,255,255,.125)
-
 .action-metadata
   margin (unit * 2) 0
   color secondaryFontColor
@@ -96,13 +93,11 @@ indicatorTransitionDuration   = 1s
   &[data-type='ArtworkCollect']
     font-size 40px
     line-height 1.3
-
 .action-type
   margin unit 0
   avant-garde()
   font-size 21px
   letter-spacing 1px
-
 .action-metadata
 .action-type
   transition opacity queueTransitionDuration ease-in-out
@@ -120,6 +115,84 @@ indicatorTransitionDuration   = 1s
   background-position bottom right
   background-repeat no-repeat
   prevent-content-shift()
+
+// Seen (Displayed if no map is available)
+// ---------------------------------------
+#map-seen-header
+  position absolute
+  bottom (500px + (unit * 3))
+  left (unit * 4)
+.map-seen-name
+  avant-garde()
+  font-size 21px
+  letter-spacing 1px
+
+#map-seen-border
+  position absolute
+  bottom (500px + (unit * 2))
+  right 0
+  left (unit * 4)
+  height 2px
+  background-color borderColor
+  z-index 3
+
+#map-seen-shield
+  position absolute
+  width 220px
+  right 0
+  bottom 0
+  height actionSize
+  background linear-gradient(left, transparent, rgba(black, 0.75))
+  z-index 2
+
+#map-seen
+  actionSize    = 220px
+  actionMargin  = (unit * 4)
+
+  position absolute
+  bottom 0
+  left (unit * 4) - ((actionSize + actionMargin) * 2)
+  height 500px
+  // Ensure children have explcit font-size
+  font-size 0
+  white-space nowrap
+  transition none
+  z-index 1
+
+  // Transition state
+  // ----------------
+  .action
+    .action-metadata
+    .action-type
+      opacity 1
+  .action:nth-child(6) .action-metadata
+    opacity 0
+  &.is-transitioning
+    transition transform queueTransitionDuration ease-in-out
+    transform translateX((actionSize + actionMargin))
+    .action:nth-child(5) .action-metadata
+      opacity 0
+
+  // Action Overrides
+  // ----------------
+  .action
+    width actionSize
+    margin-right actionMargin
+  .action-image
+    height auto
+  .action-figure
+    position relative
+    bottom inherit
+    max-height actionSize
+  .action-metadata
+    margin unit 0
+    color secondaryFontColor
+    &
+    &[data-type='ArtworkCollect']
+      font-size 20px
+      line-height 1.2
+  .action-type
+    display none
 
 // Dot
 // ---
