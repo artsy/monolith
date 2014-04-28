@@ -1,3 +1,4 @@
+config    = require '../config/config'
 View      = require '../core/view'
 Feed      = require '../models/feed'
 Queue     = require '../collections/queue'
@@ -64,7 +65,7 @@ module.exports = class MapView extends View
   placeMapDot: (show) ->
     [x, y] = show.location()
     if x and y
-      [x, y]  = MapUtils.toMap x, y
+      [x, y]  = MapUtils.toMap x, y, config.FAIR_ID
       $marker = $('<div class="map-dot" data-state="inactive"></div>').
         attr('data-id', show.get('partner').id).
         css(left: "#{x}px", bottom: "#{y}px")
