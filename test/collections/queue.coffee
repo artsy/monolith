@@ -12,6 +12,8 @@ describe 'Queue', ->
       @Queue = benv.require '../../app/collections/queue'
       @Queue.__set__ 'actionTemplate', -> '<div>foobar</div>'
 
+      @Action = require '../../app/models/action'
+
       done()
 
   afterEach (done) ->
@@ -52,6 +54,40 @@ describe 'Queue', ->
       @queue.add feedResponse.items
       @queue.length.should.be.below 10
 
+    describe '#guardedRender', ->
+      it 'renders the action if the action is not rendered yet', ->
+        action = new Action feedResponse.items[0]
+        @queue.guardedRender [action]
+        action.get('rendered').should.be.ok
+        action.set 'fragment', 'canary'
+        @queue.guardedRender [action]
+        action.get('fragment').should.equal 'canary'
+
+    describe '#__seen__', ->
+      beforeEach ->
+        # Simulate #STEP
+        @active   = @queue.__step__()
+        onDeck    = @queue.first @queue.options.insertIndex
+        actions   = [@active].concat onDeck
+
+        @fourthToLast   = @queue.at 5
+        @thirdToLast    = @queue.at 6
+        @secondToLast   = @queue.at 7
+        @last           = @queue.last()
+        @first          = @queue.first()
+
+        @seen = @queue.__seen__ actions
+
+      it 'gets an ordered window of the most recently seen actions', ->
+        @seen[0].id.should.equal @first.id
+        @seen[1].id.should.equal @last.id
+        @seen[2].id.should.equal @secondToLast.id
+        @seen[3].id.should.equal @thirdToLast.id
+        @seen[4].id.should.equal @fourthToLast.id
+
+      it 'renders every action if need be', ->
+        _.every(_.map @seen, (action) -> action.get 'rendered').should.be.true
+
     describe '#__step__', ->
       it 'moves through the queue', ->
         first   = @queue.first()
@@ -87,4 +123,4 @@ describe 'Queue', ->
         renderQueue[2].should.equal third
 
         renderQueue[0].get('rendered').should.be.ok
-        renderQueue[0].get('fragment').text().should.equal 'foobar'
+        renderQueue[0].get('fragment').should.equal '<div>foobar</div>'

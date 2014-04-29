@@ -15,8 +15,7 @@
   </header>
 
   <div id='map-queue-shield'></div>
-
-  <section id='map-queue'></section>
+  <section id='map-queue' class='map-queue'></section>
 
   <section id='map-map'></section>
 </div>
