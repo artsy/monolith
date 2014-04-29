@@ -17,4 +17,5 @@ module.exports = class Board extends Model
           @trending.fetchShows().then dfd.resolve
         else
           dfd.resolve()
+      error: dfd.resolve
     dfd.promise()
