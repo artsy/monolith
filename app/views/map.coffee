@@ -128,7 +128,7 @@ module.exports = class MapView extends View
   # Called once on view initialization
   bootstrap: ->
     @feed.fetch
-      data: size: 10
+      data: size: 40
       success: (feed, response, xhr) =>
         @feedUpdatedAt = response.updated_at
         @queue.add response.items, parse: true
