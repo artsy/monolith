@@ -4,7 +4,7 @@
     class='board-value' data-id='<%= entity.id %>'>
     <div class='bv-cell bv-cell-thumb'>
       <span class='bv-thumb'>
-        <img src=<%= entity.image('square') %> onerror='this.style.display="none"' width='200' height='200'>
+        <img src='<%= entity.image('square') %>' onerror="this.style.display='none';" width='200' height='200'>
         <b class='bv-outline'></b>
       </span>
     </div>

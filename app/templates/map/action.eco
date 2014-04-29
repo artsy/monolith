@@ -8,7 +8,7 @@
     <% artwork = @action.entity %>
     <div class='action-image'>
       <figure class='action-figure'>
-        <img src=<%= artwork.image() %> onerror='this.style.display="none"'>
+        <img src='<%= artwork.image() %>' onerror="this.style.display='none';">
         <b class='af-outline'></b>
       </figure>
     </div>
@@ -27,7 +27,7 @@
     <% artist = @action.entity %>
     <div class='action-image'>
       <figure class='action-figure'>
-        <img src=<%= artist.image() %> onerror='this.style.display="none"'>
+        <img src='<%= artist.image() %>' onerror="this.style.display='none';">
         <b class='af-outline'></b>
       </figure>
     </div>
@@ -47,7 +47,7 @@
     <% if show.image(): %>
       <div class='action-image'>
         <figure class='action-figure'>
-          <img src=<%= show.image() %> onerror='this.style.display="none"'>
+          <img src='<%= show.image() %>' onerror="this.style.display='none';">
           <b class='af-outline'></b>
         </figure>
       </div>
