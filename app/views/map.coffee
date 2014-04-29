@@ -130,14 +130,18 @@ module.exports = class MapView extends View
     @feed.fetch
       data: size: 40
       success: (feed, response, xhr) =>
-        @feedUpdatedAt = response.updated_at
-        @queue.add response.items, parse: true
-        @queue.sort()
-        @queue.fetchShows().always =>
-          @STEP()
-          @play()
+        if response.items.length
+          @feedUpdatedAt = response.updated_at
+          @queue.add response.items, parse: true
+          @queue.sort()
+          @queue.fetchShows().always =>
+            @STEP()
+            @play()
+            @loadingDone()
+            @log 'Starting playback of map'
+        else
           @loadingDone()
-          @log 'Starting playback of map'
+          @log 'Nothing to show'
 
   handleResponse: (response, callback) ->
     actions = new Actions response.items, parse: true
