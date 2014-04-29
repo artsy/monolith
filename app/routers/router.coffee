@@ -1,37 +1,48 @@
 Router            = require '../core/router'
 application       = require '../application'
-HomeView          = require '../views/home'
+ScreensaverView   = require '../views/screensaver'
 LeaderboardView   = require '../views/leaderboard'
 MapView           = require '../views/map'
+NavigationView    = require '../views/navigation'
 config            = require 'config/config'
 
 module.exports = class ApplicationRouter extends Router
   routes:
-    ''                : 'home'
+    ''                : 'navigation'
+    'screensaver'     : 'screensaver'
     ':id/leaderboard' : 'leaderboard'
     ':id/map'         : 'map'
 
   initialize: ->
-    $(window).on 'keyup', @toggleCursor
+    @$body = $('body')
+
+    $(window).on 'keyup', @__toggleCursor__
 
   execute: ->
     @view?.remove()
     super
 
-  toggleCursor: (e) ->
+  __toggleCursor__: (e) ->
     return unless e.which is 72
-    $('body').toggleClass 'has-cursor-hidden'
+    @$body.toggleClass 'has-cursor-hidden'
 
-  home: ->
-    @view = new HomeView
-    $('body').html @view.render().$el
+  __render__: ->
+    @$body.html @view.render().$el
+
+  navigation: ->
+    @view = new NavigationView
+    @__render__()
+
+  screensaver: ->
+    @view = new ScreensaverView
+    @__render__()
 
   leaderboard: (id) ->
     config.FAIR_ID = id
     @view = new LeaderboardView
-    $('body').html @view.render().$el
+    @__render__()
 
   map: (id) ->
     config.FAIR_ID = id
     @view = new MapView
-    $('body').html @view.render().$el
+    @__render__()

@@ -1,13 +1,13 @@
 View      = require '../core/view'
-template  = require '../templates/home'
+template  = require '../templates/screensaver'
 
-module.exports = class HomeView extends View
-  id: 'home'
+module.exports = class ScreensaverView extends View
+  id: 'screensaver'
   template: template
 
   randomPosition: =>
     @$screen ?= @$('#screen')
-    @$logo   ?= @$('#home-logo')
+    @$logo   ?= @$('#screensaver-logo')
 
     x   = Math.floor Math.random() * (@$screen.width() - @$logo.width())
     y   = Math.floor Math.random() * (@$screen.height() - @$logo.height())
