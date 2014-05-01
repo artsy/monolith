@@ -24,6 +24,7 @@ module.exports = class LeaderboardView extends View
     'click #debug-stop'   : 'stop'
     'click #debug-update' : 'update'
     'click #debug-render' : 'reRenderActiveBoard'
+    'click h1'            : 'goHome'
 
   initialize: (options) ->
     @boards = new Boards [
@@ -200,3 +201,6 @@ module.exports = class LeaderboardView extends View
   next: (e) ->
     e.preventDefault()
     @STEP()
+
+  goHome: ->
+    window.location = '/'

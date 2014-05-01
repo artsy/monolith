@@ -22,6 +22,7 @@ module.exports = class MapView extends View
     'click #debug-step'         : 'next'
     'click #debug-stop'         : 'stop'
     'click #debug-place-marker' : 'placeMarker'
+    'click h1'                  : 'goHome'
 
   initialize: ->
     @feed   = new Feed
@@ -187,3 +188,6 @@ module.exports = class MapView extends View
 
   rotate: ->
     @$screen.toggleClass 'is-rotated'
+
+  goHome: ->
+    window.location = '/'
