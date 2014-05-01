@@ -37,7 +37,7 @@ module.exports = class Queue extends Collection
     # Calling uniq on this guards against a duplicated
     # Action being presented when called post __step__, which
     # is mutating the queue
-    renderQueue = _.uniq @last(5).concat(onDeck)
+    renderQueue = _.uniq @last(6).concat(onDeck)
     # Reverse because we're moving from L to R
     (@guardedRender renderQueue).reverse()
 

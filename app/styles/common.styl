@@ -22,8 +22,16 @@ secondaryFontColor  = #bfbfbf
 borderColor         = #808080
 highlightColor      = #6a0bc1
 
-screenHeight        = 1920px
-screenWidth         = 1080px
+tvScreenHeight      = 1920px
+tvScreenWidth       = 1080px
+iOSStatusBarHeight  = 40px
+iPadScreenHeight    = (2048px - iOSStatusBarHeight)
+iPadScreenWidth     = 1536px
+iPhoneScreenHeight  = (1136px - iOSStatusBarHeight)
+iPhoneScreenWidth   = 640px
+
+screenHeight        = tvScreenHeight
+screenWidth         = tvScreenWidth
 screenHeaderHeight  = ((screenHeight / 6) * 0.6)
 unit                = 20px
 listThumbnailSize   = 200px

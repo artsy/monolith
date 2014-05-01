@@ -16,6 +16,7 @@ app.use require('artsy-xapp-middleware')
 
 app.get '/', (req, res) ->
   res.render 'index.ect',
+    userAgent: req.get('user-agent')
     env:
       XAPP_TOKEN: res.locals.artsyXappToken
       PUSHER_KEY: process.env.PUSHER_KEY
