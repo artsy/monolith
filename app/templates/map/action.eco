@@ -16,8 +16,8 @@
       <h2 class='action-type'>
         <%- @action.initials() %> Favorited a Work
       </h2>
-      <%= artwork.artist.get('name') %><br>
-      <em><%= artwork.get('title') %></em>
+      <%= artwork.artist.get('name') %>
+      <% if artwork.get('title'): %><br><em><%= artwork.get('title') %></em><% end %>
       <% if artwork.get('year'): %><%= artwork.get('year') %><% end %><br>
       <%= artwork.partner.get('name') %>
     </div>
