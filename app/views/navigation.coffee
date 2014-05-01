@@ -15,7 +15,7 @@ module.exports = class ScreensaverView extends View
     @listenTo @fairs, 'sync', @render
     @listenTo @fairs, 'sync', @loadingDone
 
-    @fairs.fetch data: size: 30
+    @fairs.fetch data: size: 60
 
   render: ->
     @$el.html @template(fairs: @fairs)
