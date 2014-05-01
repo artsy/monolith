@@ -17,7 +17,7 @@
 
 .navigation-header
   text-align center
-  padding unit
+  padding (unit * 2) unit
 
 @keyframes blink
   0%
@@ -37,20 +37,22 @@
   opacity 0
 
 .fair
-  avant-garde()
+  position relative
+  padding ((unit / 2) + 2) unit (unit / 2)
   width 100%
+  avant-garde()
   font-size 27px
   transition background-color 0.125s
-  padding (unit / 2) unit
   clearfix()
+  clear both
   &:hover
     background-color highlightColor
     .fair-name
       color white
-
-.fair-name
-.fair-actions
-  padding-top 1px
+  &:first-child
+    border-top 2px solid borderColor
+  &:last-child
+    border-bottom 2px solid borderColor
 
 .fair-name
   float left
