@@ -4,6 +4,7 @@ Board           = require '../models/board'
 template        = require '../templates/leaderboard'
 boardTemplate   = require '../templates/leaderboard/board'
 Loadable        = require '../utils/loadable'
+config          = require '../config/config'
 
 { TrendingArtists, TrendingExhibitors, FollowedExhibitors } = require '../models/boards'
 
@@ -33,8 +34,19 @@ module.exports = class LeaderboardView extends View
       new FollowedExhibitors
     ]
 
+    @checkForDesignFair()
+
     @boards.each (board) =>
       @listenTo board, 'updated:score', @logBoardUpdate, this
+
+  checkForDesignFair: ->
+    if @isDesignFair()
+      @boards.at(1).set name: 'Trending Designers'
+
+  isDesignFair: ->
+    # Very much a hack but works for the moment
+    # Todo: replace with a real solution
+    new RegExp('design').test config.FAIR_ID
 
   log: (payload) ->
     APP.log 'leaderboard', payload
