@@ -1,0 +1,43 @@
+@import 'nib'
+
+// Variables
+// ---------
+backgroundColor     = black
+fontColor           = #bfbfbf
+secondaryFontColor  = #bfbfbf
+borderColor         = #808080
+highlightColor      = #6a0bc1
+
+tvScreenHeight      = 1920px
+tvScreenWidth       = 1080px
+iOSStatusBarHeight  = 40px
+iPadScreenHeight    = (2048px - iOSStatusBarHeight)
+iPadScreenWidth     = 1536px
+iPhoneScreenHeight  = (1136px - iOSStatusBarHeight)
+iPhoneScreenWidth   = 640px
+
+screenHeight        = tvScreenHeight
+screenWidth         = tvScreenWidth
+screenHeaderHeight  = ((screenHeight / 6) * 0.6)
+unit                = 20px
+listThumbnailSize   = 200px
+
+// Mixins
+// ------
+avant-garde()
+  font-family 'ITC Avant Garde Gothic W04', 'AvantGardeGothicITCW01D 731075', 'AvantGardeGothicITCW01Dm', 'Helvetica', 'sans-serif'
+  font-smoothing antialiased
+  small-caps()
+
+garamond()
+  font-family 'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', 'Times', 'serif'
+  font-smoothing antialiased
+
+prevent-content-shift()
+  transform translateZ(0)
+
+calc()
+  for prefix in webkit moz ms o
+    arguments = unquote(arguments) if typeof(arguments) is string
+    add-property(current-property[0], s('-%s-calc(%s)', prefix, arguments))
+  s('calc(%s)', arguments)

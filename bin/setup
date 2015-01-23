@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+
+# Make sure NPM is installed
+if ! type npm > /dev/null; then
+ echo -e "Installing NPM..."
+ curl -L https://npmjs.org/install.sh | sh
+fi
+
+# Set up NPM dependencies
+echo -e "Installing Dependencies..."
+npm install
+
+# Remove Git remote
+if [ `git config --get remote.origin.url` = "git@github.com:dzucconi/boilerplate.git" ]; then
+  echo -e "What is your repo url? Enter URL or leave blank"
+  read url
+  if [ ! $url = '' ]; then
+    git remote rm origin
+    git remote add origin $url
+  fi
+fi

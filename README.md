@@ -2,16 +2,11 @@
 
 ```bash
 # Initial setup
-gem install foreman
 # Fill out .env based on .env.sample (Pusher key/auth endpoint is optional)
-
-npm install
+bin/setup
 
 # Start the development server
-make s
-
-# Run the specs
-make test
+bin/server
 ```
 
 ### Routes

@@ -19,6 +19,7 @@
 nbproject
 Thumbs.db
 
+build/
 node_modules/
 tmp/
 public/
