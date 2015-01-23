@@ -1,0 +1,63 @@
+<div class='action' data-type=<%= @action.get('type') %>>
+  <!-- Always has a show -->
+  <% shows  = @action.shows %>
+  <% show   = shows.first() %>
+
+  <!-- Artwork -->
+  <% if @action.get('type') is 'ArtworkCollect': %>
+    <% artwork = @action.entity %>
+    <div class='action-image'>
+      <figure class='action-figure'>
+        <img src='<%= artwork.image() %>' onerror="this.style.display='none';">
+        <b class='af-outline'></b>
+      </figure>
+    </div>
+    <div class='action-metadata' data-type=<%= @action.get('type') %>>
+      <h2 class='action-type'>
+        <%- @action.initials() %> Favorited a Work
+      </h2>
+      <%= artwork.artist.get('name') %>
+      <% if artwork.get('title'): %><br><em><%= artwork.get('title') %></em><% end %>
+      <% if artwork.get('year'): %><%= artwork.get('year') %><% end %><br>
+      <%= artwork.partner.get('name') %>
+    </div>
+
+  <!-- Artist -->
+  <% else if @action.get('type') is 'ArtistFollow': %>
+    <% artist = @action.entity %>
+    <div class='action-image'>
+      <figure class='action-figure'>
+        <img src='<%= artist.image() %>' onerror="this.style.display='none';">
+        <b class='af-outline'></b>
+      </figure>
+    </div>
+    <div class='action-metadata' data-type=<%= @action.get('type') %>>
+      <h2 class='action-type'>
+        <%- @action.initials() %> Followed an Artist
+      </h2>
+      <%= artist.get('name') %><br>
+      <% if artist.get('years'): %>
+        <em><%= artist.get('years') %></em><br>
+      <% end %>
+    </div>
+
+  <!-- Partner -->
+  <% else if @action.get('type') is 'ProfileFollow': %>
+    <% partner = @action.entity %>
+    <% if show.image(): %>
+      <div class='action-image'>
+        <figure class='action-figure'>
+          <img src='<%= show.image() %>' onerror="this.style.display='none';">
+          <b class='af-outline'></b>
+        </figure>
+      </div>
+    <% end %>
+    <div class='action-metadata' data-type=<%= @action.get('type') %>>
+      <h2 class='action-type'>
+        <%- @action.initials() %> Followed an Exhibitor
+      </h2>
+      <%= partner.get('name') %><br>
+      <%- show.displayLocation() %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,21 @@
+<div id='debug'>
+  <a id='debug-place-marker'>Position Marker</a>
+  <!-- <a id='debug-rotate'>Rotate</a> -->
+  <!-- <a id='debug-update'>Update</a> -->
+  <!-- <a id='debug-step'>Step</a> -->
+  <!-- <a id='debug-map'>Map</a> -->
+  <!-- <a id='debug-stop'>Stop</a> -->
+</div>
+
+<div id='screen'>
+  <div id='loading'></div>
+
+  <header class='map-header'>
+    <h1 class='map-name'>Live From the Artsy App</h1>
+  </header>
+
+  <div id='map-queue-shield'></div>
+  <section id='map-queue' class='map-queue'></section>
+
+  <section id='map-map'></section>
+</div>

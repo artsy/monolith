@@ -1,0 +1,24 @@
+<% for trend in @trending: %>
+  <% entity = trend.entity %>
+  <div
+    class='board-value' data-id='<%= entity.id %>'>
+    <div class='bv-cell bv-cell-thumb'>
+      <span class='bv-thumb'>
+        <img src='<%= entity.image('square') %>' onerror="this.style.display='none';" width='200' height='200'>
+        <b class='bv-outline'></b>
+      </span>
+    </div>
+
+    <div class='bv-cell bv-cell-name'>
+      <span class='bv-name'>
+        <%= entity.get('name') %>
+      </span>
+      <!-- Zeros wont be displayed -->
+      <% if trend.get('difference'): %>
+        <span class='bv-score'>
+          +<%= trend.get('difference') %>
+        </span>
+      <% end %>
+    </div>
+  </div>
+<% end %>
