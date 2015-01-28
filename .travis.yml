@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+- '0.10'
+script:
+- make test
+deploy:
+  provider: heroku
+  api_key:
+    secure: QmqHKIWobm10CgO85XmFV0g2XbgXRPbPagBrmTDw4/q9bBSsNU0KjdNzny+UOYjHvsL0azj4GffpEkeXlJnM8eu2cEHQMAlVKnk+rByqysI978GXgX+a8ht5C+fpuY8HxsilQ6KoYzFqgKiLOAYIJLMhPMCmVCgWI4NBrJdde4s=
+  app:
+    master: artsy-monolith
