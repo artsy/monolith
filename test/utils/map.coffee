@@ -25,7 +25,7 @@ describe 'MapUtils', ->
   describe '#availableMaps', ->
     it 'knows what maps are available', ->
       MapUtils.availableMaps().should.be.an.instanceOf Array
-      MapUtils.availableMaps().should.include 'the-armory-show-2014'
+      MapUtils.availableMaps().should.containEql 'the-armory-show-2014'
 
   describe '#toMap', ->
     it 'delegates to an available map tranformation handler', ->

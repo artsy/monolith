@@ -36,11 +36,11 @@ describe 'Trend', ->
       scores = @trend.__scores__
       scores.should.be.an.instanceOf Array
       keys = _.keys scores[0]
-      keys.should.include 'score'
-      keys.should.include 'fair_partner_follow'
-      keys.should.include 'fair_partner_inquiry'
-      keys.should.include 'fair_partner_view'
-      keys.should.include 'fair_partner_save'
+      keys.should.containEql 'score'
+      keys.should.containEql 'fair_partner_follow'
+      keys.should.containEql 'fair_partner_inquiry'
+      keys.should.containEql 'fair_partner_view'
+      keys.should.containEql 'fair_partner_save'
 
     it 'initially has a difference of 0', ->
       @trend.get('difference').should.equal 0
