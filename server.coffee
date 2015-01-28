@@ -26,3 +26,4 @@ app.get '/', (req, res) ->
 exports.startServer = (port, path, callback) ->
   app.listen port
   console.log "Listening on port: #{port}"
+  callback()
