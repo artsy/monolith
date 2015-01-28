@@ -1,5 +1,7 @@
 # Monolith
 
+[![Build Status](https://travis-ci.org/artsy/monolith.svg?branch=master)](https://travis-ci.org/artsy/monolith)
+
 ```bash
 # Initial setup
 gem install foreman
