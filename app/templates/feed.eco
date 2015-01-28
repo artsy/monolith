@@ -1,0 +1,16 @@
+<div id='screen' class="screen--feed">
+
+  <div id='loading'></div>
+
+  <% if @entries: %>
+    <% for fair in @entries.models: %>
+
+    <% end %>
+  <% end %>
+
+  <div class="screen--feed__footer">
+    <img src='../images/logotype.svg' id='logotype'>
+    <h1>Live at The Armory Show</h1>
+  </div>
+
+</div>
