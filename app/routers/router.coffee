@@ -3,6 +3,7 @@ application       = require '../application'
 ScreensaverView   = require '../views/screensaver'
 LeaderboardView   = require '../views/leaderboard'
 MapView           = require '../views/map'
+FeedView          = require '../views/feed'
 NavigationView    = require '../views/navigation'
 config            = require 'config/config'
 
@@ -12,6 +13,7 @@ module.exports = class ApplicationRouter extends Router
     'screensaver'     : 'screensaver'
     ':id/leaderboard' : 'leaderboard'
     ':id/map'         : 'map'
+    ':id/feed'        : 'feed'
 
   initialize: ->
     @$body = $('body')
@@ -45,4 +47,9 @@ module.exports = class ApplicationRouter extends Router
   map: (id) ->
     config.FAIR_ID = id
     @view = new MapView
+    @__render__()
+
+  feed: (id) ->
+    config.FAIR_ID = id
+    @view = new FeedView
     @__render__()
