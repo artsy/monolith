@@ -21,6 +21,7 @@ app.get '/', (req, res) ->
       XAPP_TOKEN: res.locals.artsyXappToken
       PUSHER_KEY: process.env.PUSHER_KEY
       PUSHER_AUTH_ENDPOINT: process.env.PUSHER_AUTH_ENDPOINT
+      EUROPA_ENDPOINT: process.env.EUROPA_ENDPOINT
 
 exports.startServer = (port, path, callback) ->
   app.listen port
