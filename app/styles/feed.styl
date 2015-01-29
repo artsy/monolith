@@ -16,12 +16,35 @@
   height 60px
   fill white
 
-.is-large .screen--feed__entry__image
+.screen--feed__entry
+  position absolute
+  width 220px
+
+.screen--feed__entry.is-large
   width 612px
-  height 612px
+
+.screen--feed__entry.is-index_0
+  bottom 440px
+  right 220px
+
+.screen--feed__entry.is-index_1
+  bottom 220px
+  right 0
+
+.screen--feed__entry.is-index_2
+  bottom 0
+  right 220px
+
+.screen--feed__entry__image
+  width 100%
+  height auto
 
 .screen--feed__entry__info
   margin-top 30px
+  display none
+
+.screen--feed__entry.is-large .screen--feed__entry__info
+  display block
 
 .screen--feed__entry__user
   clearfix()

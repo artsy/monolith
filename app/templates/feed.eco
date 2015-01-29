@@ -1,3 +1,4 @@
+<!-- FEED ITEM TEMPLATE -->
 <% feed_entry = (entry, additional_class) => %>
    <div class="screen--feed__entry <%= additional_class %>">
       <!-- main image -->
@@ -18,11 +19,12 @@
           </div>
         </div>
         <div class="screen--feed__entry__caption">
-          <%= entry.get('caption').text %>
+          <%- entry.getCaption() %>
         </div>
       </div>
     </div>
 <% end %>
+<!-- END FEED ITEM TEMPLATE -->
 
 <div id='screen' class="screen--feed">
 
@@ -31,10 +33,12 @@
   <% if @entries.length: %>
     <!-- show large first entry -->
     <% first_entry = @entries.models.shift() %>
-    <%= feed_entry first_entry %>
+    <%= feed_entry first_entry, 'is-large' %>
 
-    <% for entry in @entries.models: %>
-
+    <% index = 0 %>
+    <% for entry in @entries.models.slice(0,3): %>
+      <%= feed_entry entry, "is-lower is-index_#{index}" %>
+      <% index++ %>
     <% end %>
   <% end %>
 

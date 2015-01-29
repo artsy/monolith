@@ -15,7 +15,8 @@ exports.config =
           'vendor/scripts/jquery-2.1.0.js',
           'vendor/scripts/underscore-1.6.0.js',
           'vendor/scripts/backbone-1.1.2.js',
-          'vendor/scripts/imagesloaded.js'
+          'vendor/scripts/imagesloaded.js',
+          'vendor/scripts/emoji.js'
         ]
 
     stylesheets:
@@ -23,7 +24,7 @@ exports.config =
       joinTo:
         'stylesheets/app.css': /^(app|vendor)/
       order:
-        before: ['vendor/styles/normalize.css']
+        before: ['vendor/styles/normalize.css', 'vendor/styles/emoji.css']
 
     templates:
       defaultExtension: 'eco'
