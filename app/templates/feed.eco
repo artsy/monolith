@@ -1,9 +1,39 @@
+<% feed_entry = (entry, additional_class) => %>
+   <div class="screen--feed__entry <%= additional_class %>">
+      <!-- main image -->
+      <div class="screen--feed__entry__image">
+        <img src="<%= entry.get('images').standard_resolution.url %>">
+      </div>
+      <!-- meta info -->
+      <div class="screen--feed__entry__info">
+        <div class="screen--feed__entry__user">
+          <div class="screen--feed__entry__avatar">
+            <img src="<%= entry.get('user').profile_picture %>">
+          </div>
+          <div class="screen--feed__entry__username">
+            <%= entry.get('user').full_name %>
+          </div>
+          <div class="screen--feed__entry__slug">
+            @<%= entry.get('user').username %>
+          </div>
+        </div>
+        <div class="screen--feed__entry__caption">
+          <%= entry.get('caption').text %>
+        </div>
+      </div>
+    </div>
+<% end %>
+
 <div id='screen' class="screen--feed">
 
   <div id='loading'></div>
 
-  <% if @entries: %>
-    <% for fair in @entries.models: %>
+  <% if @entries.length: %>
+    <!-- show large first entry -->
+    <% first_entry = @entries.models.shift() %>
+    <%= feed_entry first_entry %>
+
+    <% for entry in @entries.models: %>
 
     <% end %>
   <% end %>

@@ -21,6 +21,7 @@ module.exports = class FeedView extends View
     @entries.fetch()
 
   render: ->
+    console.log 'entries', @entries
     @$el.html @template(entries: @entries)
 
     this
