@@ -36,7 +36,7 @@
     <%= feed_entry first_entry, 'is-large' %>
 
     <% index = 0 %>
-    <% for entry in @entries.models.slice(0,3): %>
+    <% for entry in @entries.models.slice(0,4): %>
       <%= feed_entry entry, "is-lower is-index_#{index}" %>
       <% index++ %>
     <% end %>

@@ -12,6 +12,9 @@ module.exports = class FeedView extends View
   template: template
   id: 'feed'
 
+  events:
+    'click' : 'runAnimation'
+
   initialize: ->
     @entries = new Entries
 
@@ -20,8 +23,10 @@ module.exports = class FeedView extends View
 
     @entries.fetch()
 
+  runAnimation: ->
+    @$('.screen--feed__entry').addClass 'is-transitioning'
+
   render: ->
-    console.log 'entries', @entries
     @$el.html @template(entries: @entries)
 
     this
