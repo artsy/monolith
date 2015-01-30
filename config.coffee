@@ -16,7 +16,9 @@ exports.config =
           'vendor/scripts/underscore-1.6.0.js',
           'vendor/scripts/backbone-1.1.2.js',
           'vendor/scripts/imagesloaded.js',
-          'vendor/scripts/emoji.js'
+          'vendor/scripts/emoji.js',
+          'vendor/scripts/velocity.js',
+          'vendor/scripts/velocity.ui.js'
         ]
 
     stylesheets:
