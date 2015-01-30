@@ -26,54 +26,25 @@ padding-size = 84px
 .screen--feed__entry
   position absolute
   width small-image-size
-  transition all 0.3s
   max-height large-image-size
-
-  &.is-transitioning
-    -webkit-backface-visibility hidden
-    -webkit-transform translateZ(0) scale(1.0, 1.0)
 
 .screen--feed__entry.is-large
   width large-image-size
-
-  &.is-transitioning
-    transform translate3d(0, -(large-image-size + padding-size), 0)
-
-    .screen--feed__entry__info
-      opacity 0
 
 .screen--feed__entry.is-index_0
   bottom small-image-size * 2
   right small-image-size
 
-  &.is-transitioning
-    width large-image-size
-
-    new_x = screen-width - (small-image-size * 2) - padding-size - (large-image-size - small-image-size)
-    new_y = screen-height - (small-image-size * 3) - padding-size - (large-image-size - small-image-size)
-
-    transform translate3d(- new_x, - new_y, 0)
-
 .screen--feed__entry.is-index_1
   bottom small-image-size
   right 0
-
-  &.is-transitioning
-    transform translate3d(- small-image-size, - small-image-size, 0)
-
 .screen--feed__entry.is-index_2
   bottom 0
   right 220px
 
-  &.is-transitioning
-    transform translate3d(small-image-size, - small-image-size, 0)
-
 .screen--feed__entry.is-index_3
   bottom -220px
   right 0px
-
-  &.is-transitioning
-    transform translate3d(- small-image-size, - small-image-size, 0)
 
 .screen--feed__entry__image
   width 100%
@@ -82,9 +53,11 @@ padding-size = 84px
 .screen--feed__entry__info
   margin-top 30px
   display none
+  opacity 0
 
 .screen--feed__entry.is-large .screen--feed__entry__info
   display block
+  opacity 1
 
 .screen--feed__entry__user
   clearfix()
