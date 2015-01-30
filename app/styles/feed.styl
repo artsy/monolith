@@ -1,0 +1,86 @@
+@import 'common'
+
+screen-width = 1080px
+screen-height = 1920px
+
+large-image-size = 612px
+small-image-size = 220px
+padding-size = 84px
+
+.screen--feed
+  padding padding-size
+  color #fff
+
+.screen--feed__footer
+  position absolute
+  bottom padding-size
+
+  h1
+    font-size 62px
+    margin-top 30px
+
+#logotype
+  height 60px
+  fill white
+
+.screen--feed__entry
+  position absolute
+  width small-image-size
+  max-height large-image-size
+
+.screen--feed__entry.is-large
+  width large-image-size
+
+.screen--feed__entry.is-index_0
+  bottom small-image-size * 2
+  right small-image-size
+
+.screen--feed__entry.is-index_1
+  bottom small-image-size
+  right 0
+.screen--feed__entry.is-index_2
+  bottom 0
+  right 220px
+
+.screen--feed__entry.is-index_3
+  bottom -220px
+  right 0px
+
+.screen--feed__entry__image
+  width 100%
+  height auto
+
+.screen--feed__entry__info
+  margin-top 30px
+  display none
+  opacity 0
+
+.screen--feed__entry.is-large .screen--feed__entry__info
+  display block
+  opacity 1
+
+.screen--feed__entry__user
+  clearfix()
+  height 70px
+  margin-bottom 30px
+  line-height 1
+
+.screen--feed__entry__username
+  avant-garde()
+  font-size 28px
+  margin-top 7px
+
+.screen--feed__entry__slug
+  garamond()
+  font-size 32px
+
+.screen--feed__entry__avatar
+  width 70px
+  height 70px
+  border 1px solid #e5e5e5
+  float left
+  margin-right 15px
+
+.screen--feed__entry__caption
+  max-width 612px
+  font-size 32px

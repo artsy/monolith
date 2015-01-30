@@ -12,6 +12,11 @@ module.exports =
         client: @name
         data: payload
 
+  setupEmoji: ->
+    emoji.sheet_path = '../images/sheet_64.png'
+    emoji.use_sheet = true
+    emoji.init_env()
+
   setupMonitoring: ->
     @name = @__name__()
 
@@ -41,5 +46,8 @@ module.exports =
       success: =>
         @router = new Router
         Backbone.history.start()
+
+        @setupEmoji()
+
         if env.PUSHER_KEY and env.PUSHER_AUTH_ENDPOINT
           @setupMonitoring()
