@@ -1,15 +1,17 @@
-config    = require '../config/config'
-View      = require '../core/view'
-Queue     = require '../collections/queue'
-Loadable  = require '../utils/loadable'
-Entries   = require '../collections/entries'
+config          = require '../config/config'
+View            = require '../core/view'
+Queue           = require '../collections/queue'
+Loadable        = require '../utils/loadable'
+Entries         = require '../collections/entries'
 
-template  = require '../templates/feed'
+frameTemplate   = require '../templates/feed'
+entriesTemplate = require '../templates/feed_entries'
 
 module.exports = class FeedView extends View
   _.extend @prototype, Loadable
 
-  template: template
+  frameTemplate: frameTemplate
+  entriesTemplate: entriesTemplate
   id: 'feed'
   animationDuration: 400
 
@@ -27,17 +29,27 @@ module.exports = class FeedView extends View
   initialize: ->
     @entries = new Entries
 
-    @listenTo @entries, 'sync', @render
+    @listenTo @entries, 'sync', @renderFrame
     @listenTo @entries, 'sync', @loadingDone
 
     @entries.fetch()
 
-  render: ->
-    @$el.html @template(entries: @entries)
-
+  renderFrame: =>
+    console.log 'renderFrame', @
+    @$el.html @frameTemplate()
+    @renderEntries()
     @setElementCaches()
 
     this
+
+  renderEntries: ->
+    @$('#screen__entries').html @entriesTemplate entries: @entries
+
+  onAnimationComplete: =>
+    console.log 'onAnimationComplete', @
+    _.delay =>
+      @entries.shift()
+      @renderEntries()
 
   runAnimation:->
     # get the size of the top element so we can move it offscreen
@@ -97,6 +109,7 @@ module.exports = class FeedView extends View
         options:
           display: "block"
           duration: @animationDuration
+          complete: @onAnimationComplete
       }
     ]
 
