@@ -46,10 +46,15 @@ module.exports = class FeedView extends View
     @$('#screen__entries').html @entriesTemplate entries: @entries
 
   onAnimationComplete: =>
-    console.log 'onAnimationComplete', @
     _.delay =>
       @entries.shift()
-      @renderEntries()
+      if @entries.length
+        @renderEntries()
+      else
+        @transitionToHoldingPage()
+
+  transitionToHoldingPage: ->
+    console.log 'transitioning to our holding page'
 
   runAnimation:->
     # get the size of the top element so we can move it offscreen
@@ -114,7 +119,7 @@ module.exports = class FeedView extends View
     ]
 
     $.Velocity.RunSequence [sequence[0]]
-    $.Velocity.RunSequence [sequence[1]]
+    $.Velocity.RunSequence [sequence[1], sequence[5]]
     $.Velocity.RunSequence [sequence[2]]
     $.Velocity.RunSequence [sequence[3]]
-    $.Velocity.RunSequence [sequence[4], sequence[5]]
+    $.Velocity.RunSequence [sequence[4]]
