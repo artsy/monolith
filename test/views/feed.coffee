@@ -14,7 +14,6 @@ describe 'FeedView', ->
         Backbone: benv.require 'backbone'
 
       Backbone.$ = $
-
       sinon.stub Backbone, 'sync'
       $.fn.velocity = sinon.stub()
 
@@ -24,10 +23,13 @@ describe 'FeedView', ->
       @Tags = require '../../app/collections/tags'
       @Entries = require '../../app/collections/entries'
 
-      done()
+    sinon.stub _, 'delay', (cab) -> cab()
+
+    done()
 
   afterEach (done) ->
     Backbone.sync.restore()
+    _.delay.restore()
     benv.teardown()
     done()
 
