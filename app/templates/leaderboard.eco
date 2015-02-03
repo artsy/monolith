@@ -7,7 +7,7 @@
 </div>
 
 <div id='screen'>
-  <div id='loading'></div>
+  <div id='loading' class="purple-bg"></div>
 
   <header class='board-header'>
     <h1 id='board-name'>

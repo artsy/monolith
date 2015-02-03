@@ -84,17 +84,23 @@ spinner(width=25px, height=6px, color=white)
   animation spin 2s infinite
 
 #loading
+  &:after
+    content ''
+    spinner((unit * 3), (unit / 2))
+
+// Purple Gradient BG
+// ------------------
+.purple-bg
   position absolute
   top 0
   right 0
   bottom 0
   left 0
+  background-image url('../images/gradient.png')
   background-color highlightColor
   z-index 9999
   transition opacity 1s
-  &:after
-    content ''
-    spinner((unit * 3), (unit / 2))
+
   &[data-state='fade-out']
     opacity 0
 

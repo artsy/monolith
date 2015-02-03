@@ -1,17 +1,21 @@
-config    = require '../config/config'
-View      = require '../core/view'
-Queue     = require '../collections/queue'
-Loadable  = require '../utils/loadable'
-Entries   = require '../collections/entries'
+config          = require '../config/config'
+View            = require '../core/view'
+Queue           = require '../collections/queue'
+Loadable        = require '../utils/loadable'
+Entries         = require '../collections/entries'
+Tags            = require '../collections/tags'
 
-template  = require '../templates/feed'
+frameTemplate   = require '../templates/feed'
+entriesTemplate = require '../templates/feed_entries'
 
 module.exports = class FeedView extends View
   _.extend @prototype, Loadable
 
-  template: template
+  frameTemplate: frameTemplate
+  entriesTemplate: entriesTemplate
   id: 'feed'
   animationDuration: 400
+  slideDuration: 10000
 
   events:
     'click' : 'runAnimation'
@@ -25,21 +29,43 @@ module.exports = class FeedView extends View
     @smallImageSize = @$('.screen--feed__entry.is-index_0 .screen--feed__entry__image').outerWidth()
 
   initialize: ->
+    @tags = new Tags
+    @tags.fetch success: => @setupEntries()
+
+  setupEntries: =>
     @entries = new Entries
 
-    @listenTo @entries, 'sync', @render
+    @listenTo @entries, 'sync', @renderFrame
     @listenTo @entries, 'sync', @loadingDone
 
     @entries.fetch()
 
-  render: ->
-    @$el.html @template(entries: @entries)
-
+  renderFrame: =>
+    @$el.html @frameTemplate tags: @tags
+    @renderEntries()
     @setElementCaches()
+
+    @interval = setInterval @runAnimation, @slideDuration
 
     this
 
-  runAnimation:->
+  renderEntries: ->
+    @$('#screen__entries').html @entriesTemplate entries: @entries
+
+  onAnimationComplete: =>
+    _.delay => @renderEntries() if @entries.length
+
+  maybeShowHolder: =>
+    @entries.shift()
+    @transitionToHoldingPage() if not @entries.length
+
+  transitionToHoldingPage: ->
+    clearInterval @interval
+    @$('#holding').velocity {opacity: 1}, {display: 'block', duration: @animationDuration}
+    @$('.holding-inner').velocity {top: '740px'}, {delay: @animationDuration, duration: @animationDuration}
+    setTimeout @setupEntries, @slideDuration
+
+  runAnimation: =>
     # get the size of the top element so we can move it offscreen
     $current = @$('.screen--feed__entry.is-large')
     $currentInfo = @$('.screen--feed__entry.is-large .screen--feed__entry__info')
@@ -51,7 +77,7 @@ module.exports = class FeedView extends View
         p: top: "-#{current_top}px"
         options:
           duration: @animationDuration
-          sequenceQueue: false
+          complete: @maybeShowHolder
       },
       {
         e: @$('.screen--feed__entry.is-index_0')
@@ -61,7 +87,6 @@ module.exports = class FeedView extends View
           width: @largeImageSize
         options:
           duration: @animationDuration
-          sequenceQueue: false
       },
       {
         e: @$('.screen--feed__entry.is-index_1')
@@ -70,7 +95,6 @@ module.exports = class FeedView extends View
           translateY: "-#{@smallImageSize}px"
         options:
           duration: @animationDuration
-          sequenceQueue: false
       },
       {
         e: @$('.screen--feed__entry.is-index_2')
@@ -79,7 +103,6 @@ module.exports = class FeedView extends View
           translateY: "-#{@smallImageSize}px"
         options:
           duration: @animationDuration
-          sequenceQueue: false
       },
       {
         e: @$('.screen--feed__entry.is-index_3')
@@ -88,7 +111,6 @@ module.exports = class FeedView extends View
           translateY: "-#{@smallImageSize}px"
         options:
           duration: @animationDuration
-          sequenceQueue: false
       },
       {
         e: @$('.screen--feed__entry.is-index_0 .screen--feed__entry__info')
@@ -97,11 +119,12 @@ module.exports = class FeedView extends View
         options:
           display: "block"
           duration: @animationDuration
+          complete: @onAnimationComplete
       }
     ]
 
     $.Velocity.RunSequence [sequence[0]]
-    $.Velocity.RunSequence [sequence[1]]
+    $.Velocity.RunSequence [sequence[1], sequence[5]]
     $.Velocity.RunSequence [sequence[2]]
     $.Velocity.RunSequence [sequence[3]]
-    $.Velocity.RunSequence [sequence[4], sequence[5]]
+    $.Velocity.RunSequence [sequence[4]]

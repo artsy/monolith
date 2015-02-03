@@ -1,5 +1,5 @@
 <div id='screen'>
-  <div id='loading'></div>
+  <div id='loading' class='purple-bg'></div>
 
   <header class='navigation-header'>
     <h1 class='navigation-name'>Select a Fair</h1>
