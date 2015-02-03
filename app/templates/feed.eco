@@ -7,7 +7,13 @@
   </div>
 
   <div id="holding" class="purple-bg">
-
+    <div class="holding-inner">
+      <h1>Share your Instagrams</h1>
+      <h3>Hashtag your photos with</h3>
+      <% for tag in @tags.models: %>
+        <h3>#<%= tag.get('term') %></h3>
+      <% end %>
+    </div>
   </div>
 
   <div class="screen--feed__footer">

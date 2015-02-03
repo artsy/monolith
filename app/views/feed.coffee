@@ -3,6 +3,7 @@ View            = require '../core/view'
 Queue           = require '../collections/queue'
 Loadable        = require '../utils/loadable'
 Entries         = require '../collections/entries'
+Tags            = require '../collections/tags'
 
 frameTemplate   = require '../templates/feed'
 entriesTemplate = require '../templates/feed_entries'
@@ -27,6 +28,10 @@ module.exports = class FeedView extends View
     @smallImageSize = @$('.screen--feed__entry.is-index_0 .screen--feed__entry__image').outerWidth()
 
   initialize: ->
+    @tags = new Tags
+    @tags.fetch success: => @setupEntries()
+
+  setupEntries: ->
     @entries = new Entries
 
     @listenTo @entries, 'sync', @renderFrame
@@ -35,7 +40,7 @@ module.exports = class FeedView extends View
     @entries.fetch()
 
   renderFrame: =>
-    @$el.html @frameTemplate()
+    @$el.html @frameTemplate tags: @tags
     @renderEntries()
     @setElementCaches()
 
@@ -53,6 +58,7 @@ module.exports = class FeedView extends View
 
   transitionToHoldingPage: ->
     @$('#holding').velocity {opacity: 1}, {display: 'block', duration: @animationDuration}
+    @$('.holding-inner').velocity {top: '740px'}, {delay: @animationDuration, duration: @animationDuration}
 
   runAnimation:->
     # get the size of the top element so we can move it offscreen
