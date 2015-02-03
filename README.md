@@ -1,5 +1,7 @@
 # Monolith
 
+[![Build Status](https://travis-ci.org/artsy/monolith.svg?branch=master)](https://travis-ci.org/artsy/monolith)
+
 ```bash
 # Initial setup
 gem install foreman
@@ -17,6 +19,6 @@ make test
 ### Routes
 
 * `/` —is a menu where a user can select a fair to display
-* `/#/screensaver` —is a 'screensaver'
-* `/#/:fair_id/map` —Fair map/activity feed
-* `/#/:fair_id/leaderboard` —Rotating leaderboard of Trending Exhibitors, Trending Artists, Most Followed Exhibitors
+* `/screensaver` —is a 'screensaver'
+* `/:fair_id/map` —Fair map/activity feed
+* `/:fair_id/leaderboard` —Rotating leaderboard of Trending Exhibitors, Trending Artists, Most Followed Exhibitors

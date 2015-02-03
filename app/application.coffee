@@ -45,7 +45,7 @@ module.exports =
     @authenticate
       success: =>
         @router = new Router
-        Backbone.history.start()
+        Backbone.history.start pushState: true
 
         @setupEmoji()
 

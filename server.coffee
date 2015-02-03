@@ -1,6 +1,6 @@
-express       = require 'express'
-ECT           = require 'ect'
-{ resolve }   = require 'path'
+express = require 'express'
+ECT = require 'ect'
+{ resolve } = require 'path'
 
 app = express()
 
@@ -14,7 +14,7 @@ app.use require('artsy-xapp-middleware')
   clientId: process.env.CLIENT_ID
   clientSecret: process.env.CLIENT_SECRET
 
-app.get '/', (req, res) ->
+app.get ['/', '/*'], (req, res) ->
   res.render 'index.ect',
     userAgent: req.get('user-agent')
     env:
@@ -26,4 +26,4 @@ app.get '/', (req, res) ->
 exports.startServer = (port, path, callback) ->
   app.listen port
   console.log "Listening on port: #{port}"
-  callback()
+  callback?()

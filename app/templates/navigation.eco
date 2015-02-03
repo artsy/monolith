@@ -12,9 +12,9 @@
           <div class='fair'>
             <span class='fair-name'><%= fair.get('name') %></span>
             <span class='fair-actions'>
-              <a href='/#/<%= fair.id %>/map'>Map</a>
-              <a href='/#/<%= fair.id %>/leaderboard'>Leaderboard</a>
-              <a href='/#/<%= fair.id %>/feed'>Feed</a>
+              <a href='/<%= fair.id %>/map'>Map</a>
+              <a href='/<%= fair.id %>/leaderboard'>Leaderboard</a>
+              <a href='/<%= fair.id %>/feed'>Feed</a>
             </span>
           </div>
         <% end %>

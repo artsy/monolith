@@ -70,11 +70,14 @@ describe 'Queue', ->
         onDeck    = @queue.first @queue.options.insertIndex
         actions   = [@active].concat onDeck
 
-        @fourthToLast   = @queue.at 5
-        @thirdToLast    = @queue.at 6
-        @secondToLast   = @queue.at 7
-        @last           = @queue.last()
-        @first          = @queue.first()
+        [
+          @fourthToLast
+          @thirdToLast
+          @secondToLast
+          @last
+        ] = @queue.last 4
+
+        @first = @queue.first()
 
         @seen = @queue.__seen__ actions
 
