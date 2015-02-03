@@ -15,6 +15,7 @@ module.exports = class FeedView extends View
   entriesTemplate: entriesTemplate
   id: 'feed'
   animationDuration: 400
+  slideDuration: 10000
 
   events:
     'click' : 'runAnimation'
@@ -31,7 +32,7 @@ module.exports = class FeedView extends View
     @tags = new Tags
     @tags.fetch success: => @setupEntries()
 
-  setupEntries: ->
+  setupEntries: =>
     @entries = new Entries
 
     @listenTo @entries, 'sync', @renderFrame
@@ -43,6 +44,8 @@ module.exports = class FeedView extends View
     @$el.html @frameTemplate tags: @tags
     @renderEntries()
     @setElementCaches()
+
+    @interval = setInterval @runAnimation, @slideDuration
 
     this
 
@@ -57,10 +60,12 @@ module.exports = class FeedView extends View
     @transitionToHoldingPage() if not @entries.length
 
   transitionToHoldingPage: ->
+    clearInterval @interval
     @$('#holding').velocity {opacity: 1}, {display: 'block', duration: @animationDuration}
     @$('.holding-inner').velocity {top: '740px'}, {delay: @animationDuration, duration: @animationDuration}
+    setTimeout @setupEntries, @slideDuration
 
-  runAnimation:->
+  runAnimation: =>
     # get the size of the top element so we can move it offscreen
     $current = @$('.screen--feed__entry.is-large')
     $currentInfo = @$('.screen--feed__entry.is-large .screen--feed__entry__info')
