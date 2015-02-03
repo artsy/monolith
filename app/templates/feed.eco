@@ -1,12 +1,12 @@
 <div id='screen' class="screen--feed">
 
-  <div id='loading'></div>
+  <div id='loading' class='purple-bg'></div>
 
   <div id="screen__entries">
     <!-- rendered seperately -->
   </div>
 
-  <div id="holding" class="is-purple-bg">
+  <div id="holding" class="purple-bg">
 
   </div>
 
