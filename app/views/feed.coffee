@@ -45,15 +45,14 @@ module.exports = class FeedView extends View
     @$('#screen__entries').html @entriesTemplate entries: @entries
 
   onAnimationComplete: =>
-    _.delay =>
-      @entries.shift()
-      if @entries.length
-        @renderEntries()
-      else
-        @transitionToHoldingPage()
+    _.delay => @renderEntries() if @entries.length
+
+  maybeShowHolder: =>
+    @entries.shift()
+    @transitionToHoldingPage() if not @entries.length
 
   transitionToHoldingPage: ->
-    console.log 'transitioning to our holding page'
+    @$('#holding').velocity {opacity: 1}, {display: 'block', duration: @animationDuration}
 
   runAnimation:->
     # get the size of the top element so we can move it offscreen
@@ -67,7 +66,7 @@ module.exports = class FeedView extends View
         p: top: "-#{current_top}px"
         options:
           duration: @animationDuration
-          sequenceQueue: false
+          complete: @maybeShowHolder
       },
       {
         e: @$('.screen--feed__entry.is-index_0')
@@ -77,7 +76,6 @@ module.exports = class FeedView extends View
           width: @largeImageSize
         options:
           duration: @animationDuration
-          sequenceQueue: false
       },
       {
         e: @$('.screen--feed__entry.is-index_1')
@@ -86,7 +84,6 @@ module.exports = class FeedView extends View
           translateY: "-#{@smallImageSize}px"
         options:
           duration: @animationDuration
-          sequenceQueue: false
       },
       {
         e: @$('.screen--feed__entry.is-index_2')
@@ -95,7 +92,6 @@ module.exports = class FeedView extends View
           translateY: "-#{@smallImageSize}px"
         options:
           duration: @animationDuration
-          sequenceQueue: false
       },
       {
         e: @$('.screen--feed__entry.is-index_3')
@@ -104,7 +100,6 @@ module.exports = class FeedView extends View
           translateY: "-#{@smallImageSize}px"
         options:
           duration: @animationDuration
-          sequenceQueue: false
       },
       {
         e: @$('.screen--feed__entry.is-index_0 .screen--feed__entry__info')
