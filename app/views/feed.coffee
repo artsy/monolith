@@ -35,7 +35,6 @@ module.exports = class FeedView extends View
     @entries.fetch()
 
   renderFrame: =>
-    console.log 'renderFrame', @
     @$el.html @frameTemplate()
     @renderEntries()
     @setElementCaches()

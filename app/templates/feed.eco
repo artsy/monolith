@@ -6,6 +6,10 @@
     <!-- rendered seperately -->
   </div>
 
+  <div id="holding" class="is-purple-bg">
+
+  </div>
+
   <div class="screen--feed__footer">
     <img src='../images/logotype.svg' id='logotype'>
     <h1>Live at The Armory Show</h1>
