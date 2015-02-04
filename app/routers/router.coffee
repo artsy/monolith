@@ -4,6 +4,7 @@ ScreensaverView   = require '../views/screensaver'
 LeaderboardView   = require '../views/leaderboard'
 MapView           = require '../views/map'
 FeedView          = require '../views/feed'
+ScheduleView      = require '../views/schedule'
 NavigationView    = require '../views/navigation'
 config            = require 'config/config'
 
@@ -14,6 +15,7 @@ module.exports = class ApplicationRouter extends Router
     ':id/leaderboard' : 'leaderboard'
     ':id/map'         : 'map'
     ':id/feed'        : 'feed'
+    ':id/schedule'    : 'schedule'
 
   initialize: ->
     @$body = $('body')
@@ -52,4 +54,9 @@ module.exports = class ApplicationRouter extends Router
   feed: (id) ->
     config.FAIR_ID = id
     @view = new FeedView
+    @__render__()
+
+  schedule: (id) ->
+    # config.FAIR_ID = id
+    @view = new ScheduleView
     @__render__()

@@ -15,8 +15,8 @@
   font-style normal
 
 @font-face
-  font-family "EmojiSymbols"
-  src url('../fonts/EmojiSymbols-Regular.woff') format('woff')
+  font-family "AGaramondPro-Italic"
+  src url('../fonts/AGaramondPro-Italic.woff') format('woff')
   text-decoration none
   font-style normal
 
@@ -49,15 +49,12 @@ listThumbnailSize   = 200px
 garamond()
   font-family 'Conv_AGaramondPro-Regular', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', 'Times', 'serif'
 
+garamond-italic()
+  font-family 'AGaramondPro-Italic', 'adobe-garamond-pro-italic', 'AGaramondPro-Italic', 'Times New Roman', 'Times', 'serif'
+
 avant-garde()
   font-family 'AvantGardeGothicITCW01D 731075', 'AvantGardeGothicITCW01Dm', 'Helvetica', 'sans-serif'
   text-transform uppercase
 
 prevent-content-shift()
   transform translateZ(0)
-
-calc()
-  for prefix in webkit moz ms o
-    arguments = unquote(arguments) if typeof(arguments) is string
-    add-property(current-property[0], s('-%s-calc(%s)', prefix, arguments))
-  s('calc(%s)', arguments)
