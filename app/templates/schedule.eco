@@ -1,0 +1,23 @@
+<div id='screen' class="screen--schedule">
+
+  <div id='loading' class='purple-bg'></div>
+
+  <div id="screen__events">
+    <div class="events__corner-header corner-header">
+      <!-- TODO actually fetch the fair -->
+      Today at<br><em>The Armory Show</em>
+    </div>
+    <div class="events__mini-schedule">
+      <% for item in @events.models: %>
+        <div class="events__mini-schedule__item">
+          <%=  item.get('title') %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div id="screen__alert" class="purple-bg">
+    <!-- rendered seperately -->
+  </div>
+
+</div>
