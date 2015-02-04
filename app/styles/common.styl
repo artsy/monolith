@@ -50,7 +50,7 @@ garamond()
   font-family 'Conv_AGaramondPro-Regular', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', 'Times', 'serif'
 
 garamond-italic()
-  font-family 'AGaramondPro-Italic', 'adobe-garamond-pro-italic', 'AGaramondPro-Italic', 'Times New Roman', 'Times', 'serif'
+  font-family 'AGaramondPro-Italic', 'adobe-garamond-pro-italic', 'AGaramondPro-Regular', 'Times New Roman', 'Times', 'serif'
 
 avant-garde()
   font-family 'AvantGardeGothicITCW01D 731075', 'AvantGardeGothicITCW01Dm', 'Helvetica', 'sans-serif'
@@ -58,3 +58,9 @@ avant-garde()
 
 prevent-content-shift()
   transform translateZ(0)
+
+calc()
+  for prefix in webkit moz ms o
+    arguments = unquote(arguments) if typeof(arguments) is string
+    add-property(current-property[0], s('-%s-calc(%s)', prefix, arguments))
+  s('calc(%s)', arguments)
