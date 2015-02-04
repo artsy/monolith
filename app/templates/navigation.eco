@@ -15,6 +15,7 @@
               <a href='/<%= fair.id %>/map'>Map</a>
               <a href='/<%= fair.id %>/leaderboard'>Leaderboard</a>
               <a href='/<%= fair.id %>/feed'>Feed</a>
+              <a href='/<%= fair.id %>/schedule'>Schedule</a>
             </span>
           </div>
         <% end %>
