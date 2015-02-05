@@ -23,7 +23,7 @@
         <% for item in @events: %>
           <div class="events__details__item" data-id="<%= item.cid %>">
             <div class="events__details__item__time">
-              <%= "#{item.formatDateTime('start_time', 'h:mm')}-#{item.formatDateTime('start_time', 'h:mma')}" %>
+              <%= "#{item.formatDateTime('start_time', 'h:mm')}-#{item.formatDateTime('end_time', 'h:mma')}" %>
             </div>
             <div class="events__details__item__title">
               <%- item.get('title') %>

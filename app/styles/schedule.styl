@@ -1,6 +1,6 @@
 @import 'common'
 
-#screen__events
+#screen__events, #screen__alert
   position relative
   width 100%
   height 100%
@@ -9,7 +9,13 @@
   padding 84px
 
 #screen__alert
-  display none
+  position absolute
+  opacity 0
+  pointer-events none
+  transition opacity 0.7s
+
+  &.is-active
+    opacity 1
 
 .corner-header
   color white
@@ -68,7 +74,6 @@
     font-size 32px
 
 .flickity-page-dots
-  left 84px
 
   .dot
     background-color #fff
