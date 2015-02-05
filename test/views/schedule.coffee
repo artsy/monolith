@@ -64,7 +64,7 @@ describe 'ScheduleView', ->
         @showSpy.called.should.not.be.ok
 
         # tick clock three minutes
-        @clock.tick 180000
+        @clock.tick 240000
 
         @showSpy.called.should.be.ok
         @showSpy.calledWith @view.collection.models[0], @view.alerts[1]

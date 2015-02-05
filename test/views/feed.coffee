@@ -19,6 +19,7 @@ describe 'FeedView', ->
 
       @FeedView = require '../../app/views/feed'
       @FeedView::initialize = sinon.stub()
+      @FeedView.$ = sinon.stub()
 
       @Tags = require '../../app/collections/tags'
       @Entries = require '../../app/collections/entries'
