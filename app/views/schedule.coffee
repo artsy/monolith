@@ -12,21 +12,30 @@ module.exports = class ScheduleView extends View
 
   template: template
   id: 'schedule'
-
-  events:
-    'click' : 'nextEvent'
+  autoPlay: 6000
 
   initialize: ->
     @collection = new Events schedule
 
-    @render()
+  setupSlideshow: ->
+    @slideshow = new Flickity '#events_slider',
+      cellAlign: 'left'
+      contain: true
+      prevNextButtons: false
+      wrapAround: true
+      autoPlay: @autoPlay
 
-    console.log 'events', @collection
+    @slideshow.on 'select', @slideMiniSchedule
 
-  nextEvent: -> console.log 'nothing yet'
+  slideMiniSchedule: =>
+    $settledItem = @$('.events__details__item.is-selected')
+
+    $(".events__mini-schedule__item.is-selected").removeClass 'is-selected'
+    $(".events__mini-schedule__item[data-id='#{$settledItem.data('id')}']").addClass 'is-selected'
 
   render: ->
-    @$el.html @template events: @collection
+    @$el.html @template events: @collection.currentEvents()
     @loadingDone()
+    _.delay => @setupSlideshow()
 
     this

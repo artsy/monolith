@@ -1,6 +1,11 @@
 @import 'common'
 
-.screen--schedule
+#screen__events
+  position relative
+  width 100%
+  height 100%
+  top 0
+  left 0
   padding 84px
 
 #screen__alert
@@ -20,3 +25,51 @@
   right 0
   font-size 32px
   width 412px
+
+.events__mini-schedule__item
+  margin-bottom 32px
+  line-height 1.1
+
+  &.is-selected
+    color white
+
+.events__details
+  position absolute
+  bottom 84px
+  left 0
+  font-size 64px
+  width 100%
+
+.events__details__inner
+  height 1000px
+
+.events__details__item
+  height 1000px
+  padding 84px
+  width 100%
+  color white
+
+.events__details__item__title
+  garamond-italic()
+
+.events__details__item__subtitle
+  font-size 46px
+
+.events__details__item__description
+  font-size 46px
+
+  strong
+    avant-garde()
+    display inline-block
+    margin-top 32px
+    font-size 32px
+
+.flickity-page-dots .dot
+  background-color #fff
+
+
+
+
+
+
+
