@@ -23,6 +23,7 @@ describe 'FeedView', ->
       @Tags = require '../../app/collections/tags'
       @Entries = require '../../app/collections/entries'
 
+    @clock = sinon.useFakeTimers()
     sinon.stub _, 'delay', (cab) -> cab()
 
     done()
@@ -30,6 +31,7 @@ describe 'FeedView', ->
   afterEach (done) ->
     Backbone.sync.restore()
     _.delay.restore()
+    @clock.restore()
     benv.teardown()
     done()
 
