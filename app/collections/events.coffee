@@ -14,3 +14,10 @@ module.exports = class Events extends Collection
         moment(model.get('start_time')).isSame new Date, 'day'
 
     return @models
+
+  upcomingEvents: (quanity, unit)->
+    now = moment()
+    future = now.add quanity, unit
+
+    @filter (model) ->
+      moment(model.get('start_time')).isBetween now, future, 'minute'

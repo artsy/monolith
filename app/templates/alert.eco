@@ -1,0 +1,22 @@
+<div class="events__corner-header corner-header">
+  <%= header %>
+</div>
+
+<div class="events__details">
+  <div class="events__details__inner">
+    <div class="events__details__item">
+      <div class="events__details__item__time">
+        <%= "#{item.formatDateTime('start_time', 'h:mm')}-#{item.formatDateTime('start_time', 'h:mma')}" %>
+      </div>
+      <div class="events__details__item__title">
+        <%- item.get('title') %>
+      </div>
+      <div class="events__details__item__subtitle">
+        <%- item.get('subtitle') %>
+      </div>
+      <div class="events__details__item__description">
+        <%- item.mdToHtml('description') %>
+      </div>
+    </div>
+  </div>
+</div>
