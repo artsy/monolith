@@ -48,7 +48,9 @@ module.exports = class ScheduleView extends View
     $(".events__mini-schedule__item[data-id='#{$settledItem.data('id')}']").addClass 'is-selected'
 
   startScheduleCheck: ->
-    @scheduleInterval = setInterval @maybeShowAlert, @scheduleCheckInterval
+    @scheduleInterval = setInterval =>
+      @maybeShowAlert()
+    , @scheduleCheckInterval
 
   maybeShowAlert: =>
     _.each @alerts, (alert) =>
@@ -56,7 +58,7 @@ module.exports = class ScheduleView extends View
       if _event and _event.get('alert') isnt alert.count
         return @showAlert(_event, alert)
 
-  showAlert: (_event, alert)->
+  showAlert: (_event, alert)=>
     _event.set 'alert', alert.count
     @$('#screen__alert').html(@alert item: _event).addClass 'is-active'
 
