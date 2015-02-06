@@ -27,7 +27,7 @@ describe 'ScheduleView', ->
       @Events = require '../../app/collections/events'
 
     # sets the clock to 16 minutes before first fake event
-    @clock = sinon.useFakeTimers(new Date(2015, 1, 5, 11, 43).getTime())
+    @clock = sinon.useFakeTimers(1423154820000)
 
     done()
 
@@ -61,12 +61,8 @@ describe 'ScheduleView', ->
         @view.startScheduleCheck()
         @showSpy.called.should.not.be.ok
 
-        console.log '@clock before', @clock
-
         # tick clock three minutes
         @clock.tick 240000
-
-        console.log '@clock after', @clock
 
         @showSpy.called.should.be.ok
         @showSpy.calledWith @view.collection.models[0], @view.alerts[1]
