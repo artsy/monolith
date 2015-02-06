@@ -18,7 +18,10 @@ exports.config =
           'vendor/scripts/imagesloaded.js',
           'vendor/scripts/emoji.js',
           'vendor/scripts/velocity.js',
-          'vendor/scripts/velocity.ui.js'
+          'vendor/scripts/velocity.ui.js',
+          'vendor/scripts/moment.js',
+          'vendor/scripts/marked.min.js',
+          'vendor/scripts/flickity.js'
         ]
 
     stylesheets:
@@ -26,7 +29,11 @@ exports.config =
       joinTo:
         'stylesheets/app.css': /^(app|vendor)/
       order:
-        before: ['vendor/styles/normalize.css', 'vendor/styles/emoji.css']
+        before: [
+          'vendor/styles/normalize.css',
+          'vendor/styles/emoji.css',
+          'vendor/styles/flickity.css',
+        ]
 
     templates:
       defaultExtension: 'eco'
