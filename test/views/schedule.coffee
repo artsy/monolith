@@ -61,8 +61,12 @@ describe 'ScheduleView', ->
         @view.startScheduleCheck()
         @showSpy.called.should.not.be.ok
 
+        console.log '@clock before', @clock
+
         # tick clock three minutes
         @clock.tick 240000
+
+        console.log '@clock after', @clock
 
         @showSpy.called.should.be.ok
         @showSpy.calledWith @view.collection.models[0], @view.alerts[1]
