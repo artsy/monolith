@@ -13,7 +13,7 @@ describe 'FeedView', ->
         _: benv.require 'underscore'
         Backbone: benv.require 'backbone'
 
-      $.fn.velocity = sinon.stub()
+      @Velocity = sinon.stub()
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
 
@@ -24,15 +24,13 @@ describe 'FeedView', ->
       @Entries = require '../../app/collections/entries'
 
     @clock = sinon.useFakeTimers()
-    sinon.stub _, 'delay', (cab) -> cab()
 
     done()
 
   afterEach (done) ->
     Backbone.sync.restore()
-    _.delay.restore()
     @clock.restore()
-    benv.teardown()
+    benv.teardown false
     done()
 
   describe 'FeedView', ->

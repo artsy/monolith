@@ -28,15 +28,13 @@ describe 'ScheduleView', ->
 
     # sets the clock to 16 minutes before first fake event
     @clock = sinon.useFakeTimers(new Date(2015, 1, 5, 11, 43).getTime())
-    sinon.stub _, 'delay', (cab) -> cab()
 
     done()
 
   afterEach (done) ->
     Backbone.sync.restore()
-    _.delay.restore()
     @clock.restore()
-    benv.teardown()
+    benv.teardown false
     done()
 
   describe 'ScheduleView', ->
