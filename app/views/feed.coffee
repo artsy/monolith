@@ -59,7 +59,7 @@ module.exports = class FeedView extends View
     @entries.shift()
     @transitionToHoldingPage() if not @entries.length
 
-  transitionToHoldingPage: ->
+  transitionToHoldingPage: =>
     clearInterval @interval
     @$('#holding').velocity {opacity: 1}, {display: 'block', duration: @animationDuration}
     @$('.holding-inner').velocity {top: '740px'}, {delay: @animationDuration, duration: @animationDuration}

@@ -13,13 +13,12 @@ describe 'FeedView', ->
         _: benv.require 'underscore'
         Backbone: benv.require 'backbone'
 
+      $.fn.velocity = sinon.stub()
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
-      $.fn.velocity = sinon.stub()
 
       @FeedView = require '../../app/views/feed'
       @FeedView::initialize = sinon.stub()
-      @FeedView.$ = sinon.stub()
 
       @Tags = require '../../app/collections/tags'
       @Entries = require '../../app/collections/entries'
