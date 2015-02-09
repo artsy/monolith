@@ -6,7 +6,10 @@ module.exports = class Events extends Collection
   debugMode: true
   model: Event
 
-  url: -> "#{env.EUROPA_ENDPOINT}/api/events"
+  url: -> "#{config.API_ROOT}/fairs/#{@fairId}/events"
+
+  initialize: (options)->
+    @fairId = options.fairId
 
   currentEvents: ->
     unless @debugMode
