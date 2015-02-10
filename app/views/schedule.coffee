@@ -29,7 +29,14 @@ module.exports = class ScheduleView extends View
   ]
 
   initialize: ->
-    @collection = new Events schedule
+    console.log 'config.FAIR_ID', config.FAIR_ID
+    @collection = new Events fairId: config.FAIR_ID
+    @collection.fetch
+      data:
+        size: 6
+
+    @collection.on 'sync', @render, @
+    @collection.on 'sync', @loadingDone, @
 
   setupSlideshow: ->
     @slideshow = new Flickity '#events_slider',
@@ -68,7 +75,6 @@ module.exports = class ScheduleView extends View
 
   render: ->
     @$el.html @template events: @collection.currentEvents()
-    @loadingDone()
 
     _.delay =>
       @setupSlideshow()
