@@ -62,8 +62,8 @@ module.exports = class FeedView extends View
   transitionToHoldingPage: =>
     clearInterval @interval
 
-    Velocity '#holding', {opacity: 1}, {display: 'block', duration: @animationDuration}
-    Velocity '.holding-inner', {top: '740px'}, {delay: @animationDuration, duration: @animationDuration}
+    @$('#holding').velocity {opacity: 1}, {display: 'block', duration: @animationDuration}
+    @$('.holding-inner').velocity {top: '740px'}, {delay: @animationDuration, duration: @animationDuration}
     setTimeout @setupEntries, @slideDuration
 
   runAnimation: =>
