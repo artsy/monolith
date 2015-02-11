@@ -14,7 +14,7 @@ module.exports = class FeedView extends View
   frameTemplate: frameTemplate
   entriesTemplate: entriesTemplate
   id: 'feed'
-  animationDuration: 400
+  animationDuration: 800
   slideDuration: 5000
 
   events:
@@ -39,11 +39,9 @@ module.exports = class FeedView extends View
     @tags.fetch()
 
   fetchEntries: =>
-    console.log '@old_models', @old_models
     @entries.fetch
       reset: true
       error: =>
-        console.log '@old_models', @old_models
         @entries.reset @old_models
         @entries.trigger 'sync'
 
@@ -55,8 +53,6 @@ module.exports = class FeedView extends View
     @interval = setInterval @runAnimation, @slideDuration
 
     @old_models = _.clone @entries.models
-
-    console.log '@old_models', @old_models
 
     this
 
@@ -105,6 +101,7 @@ module.exports = class FeedView extends View
         p:
           translateX: "-#{@smallImageSize}px"
           translateY: "-#{@smallImageSize}px"
+          translateZ: 0
         options:
           duration: @animationDuration
       },
@@ -113,6 +110,7 @@ module.exports = class FeedView extends View
         p:
           translateX: "#{@smallImageSize}px"
           translateY: "-#{@smallImageSize}px"
+          translateZ: 0
         options:
           duration: @animationDuration
       },
@@ -121,6 +119,7 @@ module.exports = class FeedView extends View
         p:
           translateX: "-#{@smallImageSize}px"
           translateY: "-#{@smallImageSize}px"
+          translateZ: 0
         options:
           duration: @animationDuration
       },
