@@ -15,7 +15,7 @@ module.exports = class FeedView extends View
   entriesTemplate: entriesTemplate
   id: 'feed'
   animationDuration: 400
-  slideDuration: 10000
+  slideDuration: 5000
 
   events:
     'click' : 'runAnimation'
@@ -30,15 +30,22 @@ module.exports = class FeedView extends View
 
   initialize: ->
     @tags = new Tags
-    @tags.fetch success: => @setupEntries()
-
-  setupEntries: =>
     @entries = new Entries
 
-    @listenTo @entries, 'sync', @renderFrame
-    @listenTo @entries, 'sync', @loadingDone
+    @listenTo @entries, 'sync', @renderFrame, @
+    @listenTo @entries, 'sync', @loadingDone, @
+    @listenToOnce @tags, 'sync', @fetchEntries, @
 
-    @entries.fetch()
+    @tags.fetch()
+
+  fetchEntries: =>
+    console.log '@old_models', @old_models
+    @entries.fetch
+      reset: true
+      error: =>
+        console.log '@old_models', @old_models
+        @entries.reset @old_models
+        @entries.trigger 'sync'
 
   renderFrame: =>
     @$el.html @frameTemplate tags: @tags
@@ -46,6 +53,10 @@ module.exports = class FeedView extends View
     @setElementCaches()
 
     @interval = setInterval @runAnimation, @slideDuration
+
+    @old_models = _.clone @entries.models
+
+    console.log '@old_models', @old_models
 
     this
 
@@ -64,7 +75,7 @@ module.exports = class FeedView extends View
 
     @$('#holding').velocity {opacity: 1}, {display: 'block', duration: @animationDuration}
     @$('.holding-inner').velocity {top: '740px'}, {delay: @animationDuration, duration: @animationDuration}
-    setTimeout @setupEntries, @slideDuration
+    setTimeout @fetchEntries, @slideDuration
 
   runAnimation: =>
     # get the size of the top element so we can move it offscreen
