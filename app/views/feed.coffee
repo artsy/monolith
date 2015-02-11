@@ -15,7 +15,7 @@ module.exports = class FeedView extends View
   entriesTemplate: entriesTemplate
   id: 'feed'
   animationDuration: 800
-  slideDuration: 5000
+  slideDuration: 10000
 
   events:
     'click' : 'runAnimation'
@@ -102,6 +102,7 @@ module.exports = class FeedView extends View
           translateX: "-#{@smallImageSize}px"
           translateY: "-#{@smallImageSize}px"
           translateZ: 0
+          scale: 1
         options:
           duration: @animationDuration
       },
@@ -111,6 +112,7 @@ module.exports = class FeedView extends View
           translateX: "#{@smallImageSize}px"
           translateY: "-#{@smallImageSize}px"
           translateZ: 0
+          scale: 1
         options:
           duration: @animationDuration
       },
@@ -120,6 +122,7 @@ module.exports = class FeedView extends View
           translateX: "-#{@smallImageSize}px"
           translateY: "-#{@smallImageSize}px"
           translateZ: 0
+          scale: 1
         options:
           duration: @animationDuration
       },
