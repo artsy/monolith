@@ -14,7 +14,7 @@ module.exports = class ScheduleView extends View
   template: template
   alert: alert
   id: 'schedule'
-  autoPlay: 5000
+  autoPlay: 15000
   scheduleCheckInterval: 10000
   alertDuration: 30000
   alerts:[
@@ -29,7 +29,11 @@ module.exports = class ScheduleView extends View
   ]
 
   initialize: ->
-    @collection = new Events schedule
+    @collection = new Events {}, fairId: config.FAIR_ID
+    @collection.fetch()
+
+    @collection.on 'sync', @render, @
+    @collection.on 'sync', @loadingDone, @
 
   setupSlideshow: ->
     @slideshow = new Flickity '#events_slider',
@@ -68,7 +72,6 @@ module.exports = class ScheduleView extends View
 
   render: ->
     @$el.html @template events: @collection.currentEvents()
-    @loadingDone()
 
     _.delay =>
       @setupSlideshow()

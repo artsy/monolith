@@ -57,6 +57,6 @@ module.exports = class ApplicationRouter extends Router
     @__render__()
 
   schedule: (id) ->
-    # config.FAIR_ID = id
+    config.FAIR_ID = id
     @view = new ScheduleView
     @__render__()

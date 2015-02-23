@@ -12,8 +12,8 @@
     <div class="events__mini-schedule">
       <% for item in @events: %>
         <div class="events__mini-schedule__item" data-id="<%= item.cid %>">
-          <%= item.formatDateTime('start_time', 'h:mm') %><br>
-          <%= item.get('title') %>
+          <%= item.formatDateTime('start_at', 'h:mm') %><br>
+          <%= item.get('name') %>
         </div>
       <% end %>
     </div>
@@ -23,16 +23,15 @@
         <% for item in @events: %>
           <div class="events__details__item" data-id="<%= item.cid %>">
             <div class="events__details__item__time">
-              <%= "#{item.formatDateTime('start_time', 'h:mm')}-#{item.formatDateTime('end_time', 'h:mma')}" %>
+              <%= "#{item.formatDateTime('start_at', 'h:mm')}-#{item.formatDateTime('end_at', 'h:mma')}" %>
             </div>
             <div class="events__details__item__title">
-              <%- item.get('title') %>
-            </div>
-            <div class="events__details__item__subtitle">
-              <%- item.get('subtitle') %>
+              <%- item.get('name') %>
             </div>
             <div class="events__details__item__description">
               <%- item.mdToHtml('description') %>
+              <strong>Venue</strong><br>
+              <%- item.get('venue') %>
             </div>
           </div>
         <% end %>

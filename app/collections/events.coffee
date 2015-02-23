@@ -6,14 +6,26 @@ module.exports = class Events extends Collection
   debugMode: true
   model: Event
 
-  url: -> "#{env.EUROPA_ENDPOINT}/api/events"
+  url: -> "#{config.API_ROOT}/fair/#{@fairId}/fair_events"
+
+  comparator: (model)->
+    new Date model.get('start_at')
+
+  initialize: (models, options)->
+    @fairId = options?.fairId
+    @debugMode = options?.debugMode || @debugMode
 
   currentEvents: ->
-    unless @debugMode
+    if @debugMode
+      models = @groupByDate()
+      return models[Object.keys(models)[0]]
+    else
       return @filter (model) ->
-        moment(model.get('start_time')).isSame new Date, 'day'
+        moment(model.get('start_at')).isSame new Date, 'day'
 
-    return @models
+
+  groupByDate: ->
+    @groupBy (model) -> moment(model.get('start_at')).format('YYYY-MM-DD')
 
   upcomingEvents: (quanity, unit)->
     now = moment()
