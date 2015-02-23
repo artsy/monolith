@@ -1,19 +1,29 @@
 <div id='screen' class="screen--feed">
 
-  <div id='loading' class='purple-bg'></div>
-
-  <div id="screen__entries">
-    <!-- rendered seperately -->
-  </div>
-
   <div id="holding" class="purple-bg">
     <div class="holding-inner">
       <h1>Share your Instagrams</h1>
       <h3>Hashtag your photos with</h3>
-      <% for tag in @tags.models: %>
-        <h3>#<%= tag.get('term') %></h3>
-      <% end %>
+      <h3>#TheArmoryShow</h3>
+      <h3>#ArtsyTakeover</h3>
+      <h3>#ArtWorldSpaces</h3>
     </div>
+  </div>
+
+  <div id="takeover" class="purple-bg">
+    <div class="takeover-inner">
+      <img src='../images/artsy-takeover.jpg' id='takeover-img'>
+      <div id="takeover-copy">
+        <h1 id="takeover-name">Hank Willis Thomas</h1>
+        <h3 id="takeover-caption">Don't miss the artist<br>takeover of the Artsy<br>Booth at Pier 94 entrance</h3>
+        <h3 id="takeover-hashtag">#ArtsyTakeover</h3>
+        <h5 id="takeover-img-caption">Image Courtesy of Hank Willis Thomas and Jack Shainman Gallery, New York</h3>
+      </div>
+    </div>
+  </div>
+
+  <div id="screen__entries">
+    <!-- rendered seperately -->
   </div>
 
   <div class="screen--feed__footer">
