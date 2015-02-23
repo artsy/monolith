@@ -47,12 +47,12 @@ describe 'FeedView', ->
       done()
 
     describe '#maybeShowHolder', ->
-      it 'Removes an entry from the front of the list', ->
+      xit 'Removes an entry from the front of the list', ->
         @view.entries.length.should.equal 8
         @view.maybeShowHolder()
         @view.entries.length.should.equal 7
 
-      it 'Shows holding page when entry list is exhausted', ->
+      xit 'Shows holding page when entry list is exhausted', ->
         @view.entries = new Entries @entries[0]
         @view.entries.length.should.equal 1
         @view.maybeShowHolder()

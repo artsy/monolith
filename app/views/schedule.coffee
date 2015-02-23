@@ -14,9 +14,9 @@ module.exports = class ScheduleView extends View
   template: template
   alert: alert
   id: 'schedule'
-  autoPlay: 2000
+  autoPlay: 5000
   scheduleCheckInterval: 10000
-  alertDuration: 3000
+  alertDuration: 30000
   alerts:[
     {
       count: 1
