@@ -9,13 +9,11 @@ module.exports = class Events extends Collection
   url: -> "#{config.API_ROOT}/fair/#{@fairId}/fair_events"
 
   comparator: (model)->
-    start_at = new Date model.get('start_at')
-    console.log start_at, model.get('start_at'), model.get('name')
-    return start_at
+    new Date model.get('start_at')
 
   initialize: (models, options)->
-    @fairId = options.fairId
-    @debugMode = options.debugMode || @debugMode
+    @fairId = options?.fairId
+    @debugMode = options?.debugMode || @debugMode
 
   currentEvents: ->
     if @debugMode
