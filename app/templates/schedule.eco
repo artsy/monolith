@@ -28,11 +28,10 @@
             <div class="events__details__item__title">
               <%- item.get('name') %>
             </div>
-<!--             <div class="events__details__item__subtitle">
-              <%- item.get('description') %>
-            </div> -->
             <div class="events__details__item__description">
               <%- item.mdToHtml('description') %>
+              <strong>Venue</strong><br>
+              <%- item.get('venue') %>
             </div>
           </div>
         <% end %>

@@ -14,7 +14,7 @@ module.exports = class ScheduleView extends View
   template: template
   alert: alert
   id: 'schedule'
-  autoPlay: 5000
+  autoPlay: 15000
   scheduleCheckInterval: 10000
   alertDuration: 30000
   alerts:[
@@ -29,11 +29,8 @@ module.exports = class ScheduleView extends View
   ]
 
   initialize: ->
-    console.log 'config.FAIR_ID', config.FAIR_ID
-    @collection = new Events fairId: config.FAIR_ID
-    @collection.fetch
-      data:
-        size: 6
+    @collection = new Events {}, fairId: config.FAIR_ID
+    @collection.fetch()
 
     @collection.on 'sync', @render, @
     @collection.on 'sync', @loadingDone, @
