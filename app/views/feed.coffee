@@ -9,8 +9,6 @@ frameTemplate   = require '../templates/feed'
 entriesTemplate = require '../templates/feed_entries'
 
 module.exports = class FeedView extends View
-  _.extend @prototype, Loadable
-
   frameTemplate: frameTemplate
   entriesTemplate: entriesTemplate
   id: 'feed'
@@ -29,49 +27,67 @@ module.exports = class FeedView extends View
     @smallImageSize = @$('.screen--feed__entry.is-index_0 .screen--feed__entry__image').outerWidth()
 
   initialize: ->
-    @tags = new Tags
     @entries = new Entries
 
-    @listenTo @entries, 'sync', @renderFrame, @
-    @listenTo @entries, 'sync', @loadingDone, @
-    @listenToOnce @tags, 'sync', @fetchEntries, @
+    @listenTo @entries, 'sync', @renderEntries, @
 
-    @tags.fetch()
+    @startCycle()
 
-  fetchEntries: =>
+  startCycle: =>
+    @$el.html @frameTemplate tags: @tags
+    @transitionToHoldingPage()
+
+  transitionToHoldingPage: =>
+    @$('#takeover').css opacity: 1
+    clearInterval(@interval) if @interval
+
+    @$('#holding').velocity {opacity: 1}, {display: 'block', duration: @animationDuration}
+    @$('.holding-inner').velocity {top: '740px'}, {delay: @animationDuration, duration: @animationDuration}
+    @$('#takeover-copy').velocity {translateY: '1920px'}, {duration: 0}
+
+    setTimeout @transitionToTakeoverPage, @slideDuration
+
+  transitionToTakeoverPage: =>
+    @$('#holding').velocity {opacity: 0}, {display: 'block', duration: @animationDuration}
+    @$('.holding-inner').velocity {top: '1920px'}, {delay: @animationDuration, duration: @animationDuration}
+
+    @$('#takeover-copy').velocity {translateY: '0px'}, {delay: @animationDuration, duration: @animationDuration}
+    @$('#takeover-img').velocity {top: '367px'}, {delay: @animationDuration, duration: @animationDuration}
+
+    @fetchEntries
+      complete: =>
+        setTimeout @fadeToAnimation, @slideDuration
+
+  fadeToAnimation: =>
+    @$('#takeover-copy').velocity {translateY: '1920px'}, {duration: @animationDuration}
+    @$('#takeover-img').velocity {top: '-900px'}, {duration: @animationDuration}
+
+    @$('#takeover').velocity {opacity: 0}, {duration: @animationDuration, complete: @startAnimation}
+
+  startAnimation: =>
+    @interval = setInterval @runAnimation, @slideDuration
+    @old_models = _.clone @entries.models
+
+  fetchEntries: (options = {})=>
     @entries.fetch
       reset: true
+      success: options?.complete
       error: =>
         @entries.reset @old_models
         @entries.trigger 'sync'
-
-  renderFrame: =>
-    @$el.html @frameTemplate tags: @tags
-    @renderEntries()
-    @setElementCaches()
-
-    @interval = setInterval @runAnimation, @slideDuration
-
-    @old_models = _.clone @entries.models
-
-    this
+        options?.complete()
 
   renderEntries: ->
     @$('#screen__entries').html @entriesTemplate entries: @entries
+    _.delay => @setElementCaches()
 
   onAnimationComplete: =>
     _.delay => @renderEntries() if @entries.length
 
   maybeShowHolder: =>
     @entries.shift()
-    @transitionToHoldingPage() if not @entries.length
-
-  transitionToHoldingPage: =>
-    clearInterval @interval
-
-    @$('#holding').velocity {opacity: 1}, {display: 'block', duration: @animationDuration}
-    @$('.holding-inner').velocity {top: '740px'}, {delay: @animationDuration, duration: @animationDuration}
-    setTimeout @fetchEntries, @slideDuration
+    if not @entries.length
+      @transitionToHoldingPage()
 
   runAnimation: =>
     # get the size of the top element so we can move it offscreen
