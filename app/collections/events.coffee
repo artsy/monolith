@@ -3,7 +3,7 @@ Event        = require '../models/event'
 Collection   = require '../core/collection'
 
 module.exports = class Events extends Collection
-  debugMode: true
+  debugMode: env.DEBUG_MODE || true
   model: Event
 
   url: -> "#{config.API_ROOT}/fair/#{@fairId}/fair_events"
@@ -18,18 +18,19 @@ module.exports = class Events extends Collection
   currentEvents: ->
     if @debugMode
       models = @groupByDate()
-      return models[Object.keys(models)[0]]
+      return models[Object.keys(models)[1]]
     else
       return @filter (model) ->
-        moment(model.get('start_at')).isSame new Date, 'day'
+        moment(model.get('start_at')).utc().isSame new Date, 'day'
 
 
   groupByDate: ->
-    @groupBy (model) -> moment(model.get('start_at')).format('YYYY-MM-DD')
+    if @models.length
+      @groupBy (model) -> moment(model.get('start_at')).utc().format('YYYY-MM-DD')
 
   upcomingEvents: (quanity, unit)->
-    now = moment()
-    future = moment().add quanity, unit
+    now = moment().utc()
+    future = moment().utc().add quanity, unit
 
     @find (model) ->
-      moment(model.get('start_time')).isBetween now, future, 'minute'
+      moment(model.get('start_time')).utc().isBetween now, future, 'minute'

@@ -15,7 +15,7 @@ module.exports = class Event extends Model
     data
 
   formatDateTime: (attr, format)->
-    moment(@get(attr)).format(format)
+    moment(@get(attr)).utc().format(format)
 
   mdToHtml: (attr, options = {}) ->
     marked.setOptions _.defaults options,
