@@ -2,6 +2,7 @@ config   = require '../config/config'
 View     = require '../core/view'
 Loadable = require '../utils/loadable'
 Events   = require '../collections/events'
+Videos   = require '../collections/videos'
 template = require '../templates/schedule'
 alert    = require '../templates/alert'
 
@@ -28,12 +29,30 @@ module.exports = class ScheduleView extends View
     }
   ]
 
+  videos: [
+    {
+      id: 'follow'
+      url: 'https://s3.amazonaws.com/artsy-columns/media/ArmoryBumper_FollowArtists_01_small.mp4'
+    },
+    {
+      id: 'find'
+      url: 'https://s3.amazonaws.com/artsy-columns/media/ArmoryBumper_FindExhibitors_01_small.mp4'
+    },
+    {
+      id: 'favorite'
+      url: 'https://s3.amazonaws.com/artsy-columns/media/ArmoryBumper_FavoriteWorks_01_small.mp4'
+    }
+  ]
+
   initialize: ->
     @collection = new Events {}, fairId: config.FAIR_ID
-    @collection.fetch()
+    @collection.fetch data: size: 30
 
-    @collection.on 'sync', @render, @
+    @collection.on 'sync', @postRender, @
     @collection.on 'sync', @loadingDone, @
+
+    @videos = new Videos @videos
+    @videos.on 'video:complete', @resumeSlideshow
 
   setupSlideshow: ->
     @slideshow = new Flickity '#events_slider',
@@ -43,13 +62,27 @@ module.exports = class ScheduleView extends View
       wrapAround: true
       autoPlay: @autoPlay
 
-    @slideshow.on 'select', @slideMiniSchedule
+    @slideshow.on 'cellSelect', @maybeslideMiniSchedule
 
-  slideMiniSchedule: =>
+  maybeslideMiniSchedule: =>
     $settledItem = @$('.events__details__item.is-selected')
-
     $(".events__mini-schedule__item.is-selected").removeClass 'is-selected'
     $(".events__mini-schedule__item[data-id='#{$settledItem.data('id')}']").addClass 'is-selected'
+
+    if @slideshow.selectedIndex is 0
+      @slideshow.player.pause()
+      return setTimeout (=> @playBumper()), 1500
+
+  playBumper: =>
+    @$vidContainer.addClass 'is-active'
+    @$vidContainer.find('video').hide()
+    video = @videos.getNext()
+    video.$el().show()
+    video.$el().get(0).play()
+
+  resumeSlideshow: =>
+    @$vidContainer.removeClass 'is-active'
+    @slideshow.player.play()
 
   startScheduleCheck: ->
     @scheduleInterval = setInterval =>
@@ -71,10 +104,19 @@ module.exports = class ScheduleView extends View
     , @alertDuration
 
   render: ->
-    @$el.html @template events: @collection.currentEvents()
-
-    _.delay =>
-      @setupSlideshow()
-      @startScheduleCheck()
+    @$el.html @template
+      events: @collection.currentEvents()
+      videos: @videos
 
     this
+
+  postRender: ->
+    @render()
+
+    @$vidContainer = @$('#screen__videos')
+
+    # set up stuff that depends on fetching events
+    _.delay =>
+      @videos.bindEvents()
+      @setupSlideshow()
+      @startScheduleCheck()
