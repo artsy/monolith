@@ -13,6 +13,7 @@ describe 'ScheduleView', ->
         _: benv.require 'underscore'
         Backbone: benv.require 'backbone'
         moment: benv.require 'moment'
+        env: {}
 
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
