@@ -18,6 +18,7 @@ module.exports = class ScheduleView extends View
   autoPlay: 15000
   scheduleCheckInterval: 10000
   alertDuration: 30000
+  videoFade: 1000
   alerts:[
     {
       count: 1
@@ -32,15 +33,15 @@ module.exports = class ScheduleView extends View
   videos: [
     {
       id: 'follow'
-      url: 'https://s3.amazonaws.com/artsy-columns/media/ArmoryBumper_FollowArtists_01_small.mp4'
+      url: 'https://s3.amazonaws.com/artsy-columns/media/ArmoryBumper_FollowArtists_02_small.mp4'
     },
     {
       id: 'find'
-      url: 'https://s3.amazonaws.com/artsy-columns/media/ArmoryBumper_FindExhibitors_01_small.mp4'
+      url: 'https://s3.amazonaws.com/artsy-columns/media/ArmoryBumper_FindExhibitors_02_small.mp4'
     },
     {
       id: 'favorite'
-      url: 'https://s3.amazonaws.com/artsy-columns/media/ArmoryBumper_FavoriteWorks_01_small.mp4'
+      url: 'https://s3.amazonaws.com/artsy-columns/media/ArmoryBumper_FavoriteWorks_02_small.mp4'
     }
   ]
 
@@ -52,7 +53,7 @@ module.exports = class ScheduleView extends View
     @collection.on 'sync', @loadingDone, @
 
     @videos = new Videos @videos
-    @videos.on 'video:complete', @resumeSlideshow
+    @videos.on 'video:almostDone', @resumeSlideshow
 
   setupSlideshow: ->
     @slideshow = new Flickity '#events_slider',
@@ -77,12 +78,16 @@ module.exports = class ScheduleView extends View
     @$vidContainer.addClass 'is-active'
     @$vidContainer.find('video').hide()
     video = @videos.getNext()
-    video.$el().show()
-    video.$el().get(0).play()
+    video.$el().
+      addClass('is-active').
+      fadeIn @videoFade, =>
+        video.source().play()
 
   resumeSlideshow: =>
-    @$vidContainer.removeClass 'is-active'
-    @slideshow.player.play()
+    @$('video.is-active').removeClass('is-active').
+      fadeOut @videoFade, =>
+        @$vidContainer.removeClass 'is-active'
+        @slideshow.player.play()
 
   startScheduleCheck: ->
     @scheduleInterval = setInterval =>

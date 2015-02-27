@@ -9,7 +9,9 @@ module.exports = class Videos extends Collection
     @each (video) -> video.bindEvents()
 
   resetVideos: ->
-    @each (video) -> video.set 'played', false
+    @each (video) ->
+      video.restart()
+      video.set 'played', false
 
   getNext: ->
     video = @findWhere played: false
