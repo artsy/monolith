@@ -78,8 +78,10 @@ module.exports = class ScheduleView extends View
     @$vidContainer.addClass 'is-active'
     @$vidContainer.find('video').hide()
     video = @videos.getNext()
-    video.$el().addClass('is-active').fadeIn @videoFade, =>
-      video.$el().get(0).play()
+    video.$el().
+      addClass('is-active').
+      fadeIn @videoFade, =>
+        video.source().play()
 
   resumeSlideshow: =>
     @$('video.is-active').removeClass('is-active').fadeOut @videoFade, =>
