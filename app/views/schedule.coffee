@@ -84,9 +84,10 @@ module.exports = class ScheduleView extends View
         video.source().play()
 
   resumeSlideshow: =>
-    @$('video.is-active').removeClass('is-active').fadeOut @videoFade, =>
-      @$vidContainer.removeClass 'is-active'
-      @slideshow.player.play()
+    @$('video.is-active').removeClass('is-active').
+      fadeOut @videoFade, =>
+        @$vidContainer.removeClass 'is-active'
+        @slideshow.player.play()
 
   startScheduleCheck: ->
     @scheduleInterval = setInterval =>
