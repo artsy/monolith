@@ -17,7 +17,7 @@ module.exports = class ScheduleView extends View
   id: 'schedule'
   autoPlay: 15000
   scheduleCheckInterval: 10000
-  alertDuration: 30000
+  alertDuration: 60000
   videoFade: 1000
   alerts:[
     {
