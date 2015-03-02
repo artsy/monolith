@@ -22,6 +22,7 @@ app.get ['/', '/*'], (req, res) ->
       PUSHER_KEY: process.env.PUSHER_KEY
       PUSHER_AUTH_ENDPOINT: process.env.PUSHER_AUTH_ENDPOINT
       EUROPA_ENDPOINT: process.env.EUROPA_ENDPOINT
+      DEBUG_MODE: process.env.DEBUG_MODE
 
 exports.startServer = (port, path, callback) ->
   app.listen port
