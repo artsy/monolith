@@ -29,6 +29,5 @@ module.exports = class Events extends Collection
   upcomingEvents: (quanity, unit)->
     now = moment().utc()
     future = moment().utc().add quanity, unit
-
     @find (model) ->
       moment(model.get('start_time')).utc().isBetween now, future, 'minute'

@@ -59,11 +59,12 @@ describe 'ScheduleView', ->
 
     describe '#showAlert', ->
       it 'shows alert for The Cabbie Biennial when it is within range', ->
+        @view.collection.models[0].set 'start_time', moment().add '2', 'minutes'
         @view.startScheduleCheck()
         @showSpy.called.should.not.be.ok
 
         # tick clock three minutes
-        @clock.tick 240000
+        @clock.tick 10800
 
         @showSpy.called.should.be.ok
         @showSpy.calledWith @view.collection.models[0], @view.alerts[1]
