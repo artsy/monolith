@@ -3,7 +3,6 @@ Event        = require '../models/event'
 Collection   = require '../core/collection'
 
 module.exports = class Events extends Collection
-  debugMode: env.DEBUG_MODE || true
   model: Event
 
   url: -> "#{config.API_ROOT}/fair/#{@fairId}/fair_events"
@@ -13,12 +12,12 @@ module.exports = class Events extends Collection
 
   initialize: (models, options)->
     @fairId = options?.fairId
-    @debugMode = options?.debugMode || @debugMode
+    @debugMode = options?.debugMode || env.DEBUG_MODE
 
   currentEvents: ->
-    if @debugMode
+    if @debugMode is 'true'
       models = @groupByDate()
-      return models[Object.keys(models)[0]]
+      return models[Object.keys(models)[1]]
     else
       return @filter (model) ->
         moment(model.get('start_at')).utc().isSame new Date, 'day'
