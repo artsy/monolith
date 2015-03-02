@@ -50,4 +50,5 @@ module.exports =
         @setupEmoji()
 
         if env.PUSHER_KEY and env.PUSHER_AUTH_ENDPOINT
+          console.log 'setting up monitoring'
           @setupMonitoring()
