@@ -32,8 +32,15 @@ module.exports =
       if (name is @name) or (name is 'all')
         window.location.reload true
 
+    @channels.command.bind 'route', (params) =>
+      { name, route } = params
+
+      if (name is @name) or (name is 'all')
+        @router.navigate "#{config.FAIR_ID}/#{route}", trigger: true
+
   setupRouterChannels: ->
     Backbone.history.on 'route', (self, route, params)=>
+      @pusher.unsubscribe "presence-status-#{@router.prevRoute}" if @router.prevRoute
       @pusher.subscribe "presence-status-#{route}"
 
   authenticate: (options = {}) ->

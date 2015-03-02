@@ -18,11 +18,10 @@ module.exports = class Events extends Collection
   currentEvents: ->
     if @debugMode
       models = @groupByDate()
-      return models[Object.keys(models)[1]]
+      return models[Object.keys(models)[0]]
     else
       return @filter (model) ->
         moment(model.get('start_at')).utc().isSame new Date, 'day'
-
 
   groupByDate: ->
     if @models.length
