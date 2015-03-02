@@ -6,7 +6,6 @@ module.exports =
     'monolith_' + Math.random().toString(36).substr 2, 9
 
   log: (name, payload) ->
-    console.log payload
     if @channels
       @channels.status.trigger "client-#{name}",
         client: @name
@@ -33,6 +32,10 @@ module.exports =
       if (name is @name) or (name is 'all')
         window.location.reload true
 
+  setupRouterChannels: ->
+    Backbone.history.on 'route', (self, route, params)=>
+      @pusher.subscribe "presence-status-#{route}"
+
   authenticate: (options = {}) ->
     _sync = Backbone.sync
     Backbone.sync = (method, model, options) ->
@@ -45,10 +48,11 @@ module.exports =
     @authenticate
       success: =>
         @router = new Router
+
+        if env.PUSHER_KEY and env.PUSHER_AUTH_ENDPOINT
+          @setupMonitoring()
+          @setupRouterChannels()
+
         Backbone.history.start pushState: true
 
         @setupEmoji()
-
-        if env.PUSHER_KEY and env.PUSHER_AUTH_ENDPOINT
-          console.log 'setting up monitoring'
-          @setupMonitoring()

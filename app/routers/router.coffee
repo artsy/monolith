@@ -18,6 +18,7 @@ module.exports = class ApplicationRouter extends Router
     ':id/schedule'    : 'schedule'
 
   initialize: ->
+    super
     @$body = $('body')
 
     $(window).on 'keyup', @__toggleCursor__
