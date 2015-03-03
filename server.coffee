@@ -23,6 +23,7 @@ app.get ['/', '/*'], (req, res) ->
       PUSHER_AUTH_ENDPOINT: process.env.PUSHER_AUTH_ENDPOINT
       EUROPA_ENDPOINT: process.env.EUROPA_ENDPOINT
       DEBUG_MODE: process.env.DEBUG_MODE
+      CLIENT_IP: req.connection.remoteAddress
 
 exports.startServer = (port, path, callback) ->
   app.listen port

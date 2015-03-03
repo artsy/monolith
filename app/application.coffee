@@ -3,7 +3,7 @@ config  = require 'config/config'
 
 module.exports =
   __name__: ->
-    'monolith_' + Math.random().toString(36).substr 2, 9
+    'monolith_' + env.CLIENT_IP
 
   log: (name, payload) ->
     if @channels
