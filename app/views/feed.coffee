@@ -9,6 +9,7 @@ frameTemplate   = require '../templates/feed'
 entriesTemplate = require '../templates/feed_entries'
 
 module.exports = class FeedView extends View
+  feedSize: 30
   frameTemplate: frameTemplate
   entriesTemplate: entriesTemplate
   id: 'feed'
@@ -71,6 +72,8 @@ module.exports = class FeedView extends View
   fetchEntries: (options = {})=>
     @entries.fetch
       reset: true
+      data:
+        size: @feedSize
       success: options?.complete
       error: =>
         @entries.reset @old_models
