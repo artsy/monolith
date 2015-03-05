@@ -1,21 +1,20 @@
 <div class="events__corner-header corner-header">
-  Starting at <%= @item.formatDateTime('start_time', 'h:mma') %>
+  Starting at <%= @item.formatDateTime('start_at', 'h:mma') %>
 </div>
 
 <div class="events__details">
   <div class="events__details__inner">
     <div class="events__details__item">
       <div class="events__details__item__time">
-        <%= "#{@item.formatDateTime('start_time', 'h:mm')}-#{@item.formatDateTime('end_time', 'h:mma')}" %>
+        <%= "#{@item.formatDateTime('start_at', 'h:mm')}-#{@item.formatDateTime('end_at', 'h:mma')}" %>
       </div>
       <div class="events__details__item__title">
-        <%- @item.get('title') %>
-      </div>
-      <div class="events__details__item__subtitle">
-        <%- @item.get('subtitle') %>
+        <%- @item.get('name') %>
       </div>
       <div class="events__details__item__description">
         <%- @item.mdToHtml('description') %>
+        <strong>Venue</strong><br>
+        <%- item.get('venue') %>
       </div>
     </div>
   </div>
