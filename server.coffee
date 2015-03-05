@@ -23,7 +23,7 @@ app.get ['/', '/*'], (req, res) ->
       PUSHER_AUTH_ENDPOINT: process.env.PUSHER_AUTH_ENDPOINT
       EUROPA_ENDPOINT: process.env.EUROPA_ENDPOINT
       DEBUG_MODE: process.env.DEBUG_MODE
-      CLIENT_IP: req.header('x-forwarded-for') || req.connection.remoteAddress
+      CLIENT_IP: req.ip
 
 exports.startServer = (port, path, callback) ->
   app.listen port
